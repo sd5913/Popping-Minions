@@ -1,4 +1,5 @@
-# Popping-Minions# The Next Stop
+# Popping-Minions
+# The Next Stop
 
 **SD5913 Group Project 2026 | Team Popping Minions**
 
@@ -12,13 +13,22 @@ While rushing to the examination venue, the protagonist boards a train and encou
 
 **Target Audience:** Young adults and students experiencing academic pressure, uncertainty about the future, and anxiety about falling behind their peers.
 
-## Play the Demo
+## Play the Prototype
 
-**Current Status:** Early interactive prototype
+**Current Status:** Early playable prototype
 
-An online playable demo will be linked here after deployment.
+The current interactive prototype is available in this repository as `index.html`.
 
-For now, the prototype can be downloaded and run locally using the instructions below.
+To try the game:
+
+1. Click **Code → Download ZIP** on this GitHub repository.
+2. Extract the downloaded ZIP file.
+3. Open `index.html` in a desktop web browser.
+4. Use the left and right arrow keys to change lanes, and press Space to jump.
+
+The prototype currently demonstrates basic movement, animated obstacles, collision feedback, and alternative-route progression.
+
+**Note:** A live web deployment is not currently available. Gesture controls, narrative integration, and additional levels are still under development.
 
 ## Current Prototype Features
 
