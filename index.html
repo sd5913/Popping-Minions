@@ -45,7 +45,49 @@
     let lane = 1;
     const lanePositions = [340, 480, 620];
     let animationOffset = 0;
+    let obstacleProgress = 0;
+    let lastFrameTime = null;
 
+    function drawObstacle() {
+  const y = 220 + obstacleProgress * 350;
+  const x = 480;
+
+  // Perspective scaling
+  const scale = 0.25 + obstacleProgress * 1.5;
+
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(scale, scale);
+
+  // Pencil body
+  ctx.fillStyle = "#f5d65c";
+  ctx.fillRect(-12, -55, 24, 55);
+
+  // Pencil tip
+  ctx.beginPath();
+  ctx.moveTo(-12, -55);
+  ctx.lineTo(0, -75);
+  ctx.lineTo(12, -55);
+  ctx.closePath();
+  ctx.fillStyle = "#d9ad85";
+  ctx.fill();
+
+  // Pencil lead
+  ctx.beginPath();
+  ctx.moveTo(-4, -68);
+  ctx.lineTo(0, -75);
+  ctx.lineTo(4, -68);
+  ctx.closePath();
+  ctx.fillStyle = "#30343b";
+  ctx.fill();
+
+  // Warning stripes
+  ctx.fillStyle = "#30343b";
+  ctx.fillRect(-12, -20, 24, 6);
+  ctx.fillRect(-12, -8, 24, 6);
+
+  ctx.restore();
+}
     function drawScene() {
       // Station background
       ctx.fillStyle = "#64788a";
@@ -100,6 +142,9 @@
       ctx.setLineDash([]);
       ctx.lineDashOffset = 0;
 
+      // Draw approaching obstacle
+      drawObstacle();
+
       // Player
       const x = lanePositions[lane];
       const y = 420;
@@ -142,15 +187,30 @@
       drawScene();
     });
 
-    function animate() {
-  animationOffset = (animationOffset + 2) % 36;
+    function animate(timestamp) {
+  const deltaTime = lastFrameTime === null
+    ? 0
+    : Math.min(timestamp - lastFrameTime, 50);
+
+  lastFrameTime = timestamp;
+
+  // Road movement
+  animationOffset = (animationOffset + deltaTime * 0.12) % 36;
+
+  // Obstacle movement
+  obstacleProgress += deltaTime / 3000;
+
+  // Restart obstacle from the distance
+  if (obstacleProgress > 1.1) {
+    obstacleProgress = 0;
+  }
 
   drawScene();
 
   requestAnimationFrame(animate);
 }
 
-animate();
+requestAnimationFrame(animate);
   </script>
 
 </body>

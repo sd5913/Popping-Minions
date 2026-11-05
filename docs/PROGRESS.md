@@ -86,3 +86,21 @@ AI was used to assist with the structure and English drafting of project documen
 AI also assisted in drafting the initial HTML Canvas prototype and keyboard movement code. The implementation was tested locally by a team member.
 
 AI assisted with implementing the Canvas animation loop and road-marking movement. The functionality was tested locally by a team member.
+### Moving Obstacle Prototype — 5 November 2026
+
+**Implemented**
+- Added a pencil-shaped obstacle to the 2.5D road.
+- Implemented perspective scaling as the obstacle approaches.
+- Used frame-time-based animation for obstacle movement.
+
+**Local Testing**
+- Confirmed that the yellow obstacle appears correctly.
+- Verified that the obstacle moves toward the player and repeats.
+- Confirmed that keyboard lane switching still works.
+
+**Current Limitations**
+- The obstacle currently stays in the center lane.
+- Collision detection and alternative routes are not yet implemented.
+
+**AI Assistance**
+AI assisted with drafting and modifying the obstacle animation code. The resulting interaction was tested locally by a team member.
