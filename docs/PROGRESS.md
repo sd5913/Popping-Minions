@@ -196,3 +196,66 @@ AI assisted with implementing the jump animation and keyboard input. The functio
 **Next Step**
 Connect jumping to collision detection so players can avoid obstacles.
 
+---
+
+## End-of-Day Summary — 5 November 2026
+
+### Overall Progress
+
+Today, we progressed from the initial game concept to a functioning browser-based interaction prototype.
+
+**Completed Milestones**
+
+- Established the narrative concept, core gameplay direction, and initial project scope.
+- Developed a simplified 2.5D station environment using HTML5 Canvas and JavaScript.
+- Implemented three-lane keyboard movement.
+- Added continuous road animation to simulate forward movement.
+- Created a perspective-scaled, moving pencil obstacle.
+- Implemented basic collision detection and visual feedback.
+- Added an alternative-route transition after collision, allowing the player to continue instead of restarting.
+- Implemented keyboard-controlled jumping and automatic landing.
+- Configured GitHub Actions for basic automated code checks.
+
+### Testing and Validation
+
+Local browser testing confirmed that:
+
+- Keyboard-controlled lane switching works.
+- Road and obstacle animations run continuously.
+- Collision feedback is displayed.
+- The player can transition to an alternative route and continue moving.
+- The jump animation responds to the Space key.
+
+The initial GitHub Actions workflow also completed successfully.
+
+### Current Limitations
+
+- Jumping is not yet connected to obstacle collision avoidance.
+- The lower route remains a simplified prototype.
+- Gesture recognition has not yet been integrated.
+- Visual assets and narrative scenes are still under development.
+- External playtesting has not yet been conducted.
+- Automated gameplay behaviour tests have not yet been implemented.
+
+### Next Development Priorities
+
+1. Connect jump timing to collision detection.
+2. Improve obstacle avoidance and route transitions.
+3. Introduce additional visual assets and narrative elements.
+4. Begin testing gesture-based controls.
+5. Prepare an integrated core experience for the 12 November tutor review.
+
+### Development Evidence
+
+- Repository: https://github.com/sd5913/Popping-Minions
+- Latest verified commit: `3dd224e`
+- CI configuration commit: `dff36d2`
+- Detailed implementation and testing notes are recorded in the milestone entries above.
+
+### AI Assistance and Reflection
+
+AI assisted with code drafting, debugging guidance, documentation, and GitHub Actions configuration. The implemented interactions were tested locally by a team member.
+
+The main achievement of this development session was demonstrating the core narrative idea through interaction: a mistake can lead to a different path rather than ending the journey.
+
+Further development will focus on improving the interaction quality and integrating the narrative experience.
