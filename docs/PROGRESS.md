@@ -127,3 +127,28 @@ AI assisted with drafting the collision detection logic and integrating visual f
 **Next Step**
 Implement the alternative-path mechanism so that a collision can lead to a different route instead of restarting the game.
 
+
+### Alternative Route Prototype — 5 November 2026
+
+**Implemented**
+- Added a transition from the main road to a lower route after collision.
+- Added a short falling animation.
+- Changed the road appearance to indicate the alternative route.
+- Allowed the player to continue moving without restarting.
+
+**Local Testing**
+- Verified the falling transition after collision.
+- Confirmed that the lower route appears.
+- Confirmed that keyboard movement continues on the alternative route.
+- No Game Over screen is triggered.
+
+**Current Limitations**
+- The lower route uses a simplified visual representation.
+- Additional obstacles and narrative events are not yet implemented.
+
+**AI Assistance**
+AI assisted with implementing the route state transitions and falling animation. The interaction was tested locally by a team member.
+
+**Next Step**
+Add automated code checks using GitHub Actions.
+

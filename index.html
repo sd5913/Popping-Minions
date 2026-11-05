@@ -49,6 +49,9 @@
     let lastFrameTime = null;
 let collisionCount = 0;
 let collisionFeedbackUntil = 0;
+let route = "main";
+let fallStartTime = 0;
+let fallProgress = 0;
 
     function drawObstacle() {
   const y = 220 + obstacleProgress * 350;
@@ -125,7 +128,7 @@ let collisionFeedbackUntil = 0;
       ctx.lineTo(850, 540);
       ctx.lineTo(110, 540);
       ctx.closePath();
-      ctx.fillStyle = "#bac4ca";
+      ctx.fillStyle = route === "lower" ? "#85a9ae" : "#bac4ca";
       ctx.fill();
 
       // Lane markings
@@ -145,11 +148,17 @@ let collisionFeedbackUntil = 0;
       ctx.lineDashOffset = 0;
 
       // Draw approaching obstacle
-      drawObstacle();
+      if (route === "main") drawObstacle();
 
       // Player
       const x = lanePositions[lane];
       const y = 420;
+
+  ctx.save();
+  if (route === "falling") {
+    const drop = Math.sin(fallProgress * Math.PI) * 90;
+    ctx.translate(0, drop);
+  }
 
       // Legs
       ctx.fillStyle = "#29313c";
@@ -173,6 +182,7 @@ let collisionFeedbackUntil = 0;
       // Short hair
       ctx.fillStyle = "#252b30";
       ctx.fillRect(x - 17, y - 38, 34, 13);
+  ctx.restore();
     }
 
     document.addEventListener("keydown", (event) => {
@@ -190,6 +200,18 @@ let collisionFeedbackUntil = 0;
     });
 
     
+function drawLowerRouteMessage() {
+  ctx.fillStyle = "rgba(24, 54, 61, 0.88)";
+  ctx.fillRect(20, 20, 335, 78);
+
+  ctx.fillStyle = "#fff2da";
+  ctx.font = "bold 22px Arial";
+  ctx.fillText("A Different Path", 35, 52);
+
+  ctx.font = "15px Arial";
+  ctx.fillText("The journey continues.", 35, 78);
+}
+
 function drawCollisionFeedback(timestamp) {
   if (timestamp >= collisionFeedbackUntil) return;
 
@@ -222,10 +244,26 @@ function animate(timestamp) {
   if (
     previousProgress < 0.73 &&
     obstacleProgress >= 0.73 &&
-    lane === 1
+    lane === 1 &&
+    route === "main" 
   ) {
     collisionCount++;
     collisionFeedbackUntil = timestamp + 1200;
+    route = "falling";
+    fallStartTime = timestamp;
+    fallProgress = 0;
+  }
+
+  // Transition to the lower route after falling
+  if (route === "falling") {
+    fallProgress = Math.min(
+      (timestamp - fallStartTime) / 900,
+      1
+    );
+
+    if (fallProgress >= 1) {
+      route = "lower";
+    }
   }
 
   // Restart obstacle from the distance
@@ -235,6 +273,9 @@ function animate(timestamp) {
 
   drawScene();
   drawCollisionFeedback(timestamp);
+  if (route === "lower") {
+    drawLowerRouteMessage();
+  }
 
   requestAnimationFrame(animate);
 }
