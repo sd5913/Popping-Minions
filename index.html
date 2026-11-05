@@ -52,6 +52,7 @@ let collisionFeedbackUntil = 0;
 let route = "main";
 let fallStartTime = 0;
 let fallProgress = 0;
+let jumpStartTime = -Infinity;
 
     function drawObstacle() {
   const y = 220 + obstacleProgress * 350;
@@ -155,6 +156,11 @@ let fallProgress = 0;
       const y = 420;
 
   ctx.save();
+  const jumpElapsed = performance.now() - jumpStartTime;
+  if (jumpElapsed < 700) {
+    const jumpHeight = 85 * Math.sin(Math.PI * jumpElapsed / 700);
+    ctx.translate(0, -jumpHeight);
+  }
   if (route === "falling") {
     const drop = Math.sin(fallProgress * Math.PI) * 90;
     ctx.translate(0, drop);
@@ -225,6 +231,19 @@ function drawCollisionFeedback(timestamp) {
   ctx.font = "15px Arial";
   ctx.fillText("Mistakes do not end the journey.", 35, 77);
 }
+
+document.addEventListener("keydown", (event) => {
+  if (event.code !== "Space") return;
+
+  event.preventDefault();
+  if (event.repeat) return;
+
+  const elapsed = performance.now() - jumpStartTime;
+
+  if (elapsed >= 700 && route !== "falling") {
+    jumpStartTime = performance.now();
+  }
+});
 
 function animate(timestamp) {
   const deltaTime = lastFrameTime === null

@@ -173,3 +173,26 @@ AI assisted with drafting and configuring the GitHub Actions workflow.
 
 **Next Step**
 Continue developing the interactive gameplay and introduce automated gameplay tests where appropriate.
+### Jump Animation Prototype — 5 November 2026
+
+**Implemented**
+- Added Space-key input for jumping.
+- Implemented a vertical jump animation.
+- Added automatic landing after each jump.
+- Preserved lane switching and existing road animations.
+
+**Local Testing**
+- Confirmed that pressing Space triggers a visible jump.
+- Verified that the character returns to the ground.
+- Confirmed that lane switching and obstacle animations still work.
+
+**Current Limitations**
+- Jumping does not yet prevent obstacle collisions.
+- Jump timing and collision avoidance still need testing.
+
+**AI Assistance**
+AI assisted with implementing the jump animation and keyboard input. The functionality was tested locally by a team member.
+
+**Next Step**
+Connect jumping to collision detection so players can avoid obstacles.
+
