@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Next Stop — Prototype</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #19232b;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    canvas {
+      width: min(95vw, 960px);
+      aspect-ratio: 16 / 9;
+      background: #64788a;
+      border-radius: 8px;
+    }
+
+    p {
+      color: #d1d9df;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>The Next Stop</h2>
+  <canvas id="game" width="960" height="540"></canvas>
+  <p>Use ← and → to move between lanes</p>
+
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+
+    let lane = 1;
+    const lanePositions = [340, 480, 620];
+
+    function drawScene() {
+      // Station background
+      ctx.fillStyle = "#64788a";
+      ctx.fillRect(0, 0, 960, 540);
+
+      // Distant station entrance
+      ctx.fillStyle = "#354552";
+      ctx.fillRect(350, 95, 260, 145);
+
+      // Station clock
+      ctx.beginPath();
+      ctx.arc(480, 115, 38, 0, Math.PI * 2);
+      ctx.fillStyle = "#e7e3d8";
+      ctx.fill();
+      ctx.strokeStyle = "#d15d50";
+      ctx.lineWidth = 6;
+      ctx.stroke();
+
+      // Clock hands
+      ctx.beginPath();
+      ctx.moveTo(480, 115);
+      ctx.lineTo(480, 94);
+      ctx.moveTo(480, 115);
+      ctx.lineTo(498, 125);
+      ctx.strokeStyle = "#354552";
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      // Perspective road
+      ctx.beginPath();
+      ctx.moveTo(420, 220);
+      ctx.lineTo(540, 220);
+      ctx.lineTo(850, 540);
+      ctx.lineTo(110, 540);
+      ctx.closePath();
+      ctx.fillStyle = "#bac4ca";
+      ctx.fill();
+
+      // Lane markings
+      ctx.strokeStyle = "#e9edf0";
+      ctx.lineWidth = 4;
+      ctx.setLineDash([16, 20]);
+
+      for (const bottomX of [370, 590]) {
+        ctx.beginPath();
+        ctx.moveTo(480, 220);
+        ctx.lineTo(bottomX, 540);
+        ctx.stroke();
+      }
+
+      ctx.setLineDash([]);
+
+      // Player
+      const x = lanePositions[lane];
+      const y = 420;
+
+      // Legs
+      ctx.fillStyle = "#29313c";
+      ctx.fillRect(x - 17, y + 42, 13, 43);
+      ctx.fillRect(x + 4, y + 42, 13, 43);
+
+      // Light-colored jacket
+      ctx.fillStyle = "#e7e0d2";
+      ctx.fillRect(x - 23, y - 6, 46, 55);
+
+      // Orange-red backpack
+      ctx.fillStyle = "#dd694b";
+      ctx.fillRect(x - 20, y + 3, 40, 43);
+
+      // Head
+      ctx.fillStyle = "#e0b49a";
+      ctx.beginPath();
+      ctx.arc(x, y - 20, 17, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Short hair
+      ctx.fillStyle = "#252b30";
+      ctx.fillRect(x - 17, y - 38, 34, 13);
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        lane = Math.max(0, lane - 1);
+      }
+
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        lane = Math.min(2, lane + 1);
+      }
+
+      drawScene();
+    });
+
+    drawScene();
+  </script>
+
+</body>
+</html>

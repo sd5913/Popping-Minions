@@ -21,6 +21,9 @@ Establish the narrative concept and development scope, and begin prototyping the
 - Identified planned movement mechanics, gesture controls, and visual guidelines.
 - Began exploring visual concepts for different game environments.
 - Created the initial English game concept document in the shared GitHub repository.
+- Implemented the first browser-based interactive prototype using HTML5 Canvas and JavaScript.
+- Created a simplified 2.5D station environment and a character with an orange-red backpack.
+- Implemented three-lane movement using the left and right arrow keys.
 
 ### Development Evidence
 
@@ -36,7 +39,19 @@ Establish the narrative concept and development scope, and begin prototyping the
 
 ### Testing
 
-No playable interaction has been verified yet. Initial interaction testing will begin after the first prototype is implemented.
+**Initial Interaction Test — 5 November 2026**
+
+Tested the prototype locally in a web browser.
+
+- The game canvas displayed successfully.
+- The protagonist appeared in the station environment.
+- Left and right arrow keys successfully changed the character's lane.
+
+**Result:** Basic keyboard-controlled movement works.
+
+**Limitations:** Automatic running, obstacles, jumping, collision detection, and gesture recognition have not yet been implemented.
+
+External playtesting has not yet been conducted.
 
 ### Tutor Feedback
 
@@ -56,3 +71,4 @@ Individual responsibilities will be added after confirmation with the team.
 ### AI Assistance
 
 AI was used to assist with the structure and English drafting of project documentation. The team is responsible for reviewing and validating the content. AI assistance during coding and asset development will be documented as it occurs.
+AI also assisted in drafting the initial HTML Canvas prototype and keyboard movement code. The implementation was tested locally by a team member.
