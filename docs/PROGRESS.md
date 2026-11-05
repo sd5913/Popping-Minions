@@ -152,3 +152,24 @@ AI assisted with implementing the route state transitions and falling animation.
 **Next Step**
 Add automated code checks using GitHub Actions.
 
+### Automated Code Checks — 5 November 2026
+
+**Implemented**
+- Created a GitHub Actions workflow for automated code checks.
+- Configured checks for pushes to main and pull requests.
+- Added required-file verification and JavaScript syntax checking.
+
+**Testing**
+- Successfully triggered the first GitHub Actions workflow.
+- Confirmed that the first workflow run completed with a green Success status.
+- Verified that the automated checks passed.
+
+**Current Limitations**
+- The workflow currently checks file existence and JavaScript syntax.
+- Gameplay behaviour and collision logic are not yet automatically tested.
+
+**AI Assistance**
+AI assisted with drafting and configuring the GitHub Actions workflow.
+
+**Next Step**
+Continue developing the interactive gameplay and introduce automated gameplay tests where appropriate.
