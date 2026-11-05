@@ -104,3 +104,26 @@ AI assisted with implementing the Canvas animation loop and road-marking movemen
 
 **AI Assistance**
 AI assisted with drafting and modifying the obstacle animation code. The resulting interaction was tested locally by a team member.
+
+### Collision Detection Prototype — 5 November 2026
+
+**Implemented**
+- Added basic collision detection for the approaching pencil obstacle.
+- Added visual feedback: "Hit! Keep going."
+- Designed collisions to allow continued gameplay without a Game Over screen.
+
+**Local Testing**
+- Confirmed that collision feedback appears when the player remains in the center lane.
+- Verified the initial collision interaction in the browser.
+
+**Current Limitations**
+- Collision detection is based on obstacle progress and lane position.
+- Falling onto an alternative route has not yet been implemented.
+- Further testing is needed for different movement timings.
+
+**AI Assistance**
+AI assisted with drafting the collision detection logic and integrating visual feedback. The prototype was tested locally by a team member.
+
+**Next Step**
+Implement the alternative-path mechanism so that a collision can lead to a different route instead of restarting the game.
+

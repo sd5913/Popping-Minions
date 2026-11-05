@@ -47,6 +47,8 @@
     let animationOffset = 0;
     let obstacleProgress = 0;
     let lastFrameTime = null;
+let collisionCount = 0;
+let collisionFeedbackUntil = 0;
 
     function drawObstacle() {
   const y = 220 + obstacleProgress * 350;
@@ -187,7 +189,22 @@
       drawScene();
     });
 
-    function animate(timestamp) {
+    
+function drawCollisionFeedback(timestamp) {
+  if (timestamp >= collisionFeedbackUntil) return;
+
+  ctx.fillStyle = "rgba(60, 35, 40, 0.9)";
+  ctx.fillRect(20, 20, 290, 75);
+
+  ctx.fillStyle = "#fff2e8";
+  ctx.font = "bold 22px Arial";
+  ctx.fillText("Hit! Keep going.", 35, 52);
+
+  ctx.font = "15px Arial";
+  ctx.fillText("Mistakes do not end the journey.", 35, 77);
+}
+
+function animate(timestamp) {
   const deltaTime = lastFrameTime === null
     ? 0
     : Math.min(timestamp - lastFrameTime, 50);
@@ -198,7 +215,18 @@
   animationOffset = (animationOffset + deltaTime * 0.12) % 36;
 
   // Obstacle movement
+  const previousProgress = obstacleProgress;
   obstacleProgress += deltaTime / 3000;
+
+  // Detect a collision when the obstacle reaches the player
+  if (
+    previousProgress < 0.73 &&
+    obstacleProgress >= 0.73 &&
+    lane === 1
+  ) {
+    collisionCount++;
+    collisionFeedbackUntil = timestamp + 1200;
+  }
 
   // Restart obstacle from the distance
   if (obstacleProgress > 1.1) {
@@ -206,6 +234,7 @@
   }
 
   drawScene();
+  drawCollisionFeedback(timestamp);
 
   requestAnimationFrame(animate);
 }
