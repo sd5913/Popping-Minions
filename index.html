@@ -44,6 +44,7 @@
 
     let lane = 1;
     const lanePositions = [340, 480, 620];
+    let animationOffset = 0;
 
     function drawScene() {
       // Station background
@@ -87,6 +88,7 @@
       ctx.strokeStyle = "#e9edf0";
       ctx.lineWidth = 4;
       ctx.setLineDash([16, 20]);
+      ctx.lineDashOffset = -animationOffset;
 
       for (const bottomX of [370, 590]) {
         ctx.beginPath();
@@ -96,6 +98,7 @@
       }
 
       ctx.setLineDash([]);
+      ctx.lineDashOffset = 0;
 
       // Player
       const x = lanePositions[lane];
@@ -139,7 +142,15 @@
       drawScene();
     });
 
-    drawScene();
+    function animate() {
+  animationOffset = (animationOffset + 2) % 36;
+
+  drawScene();
+
+  requestAnimationFrame(animate);
+}
+
+animate();
   </script>
 
 </body>

@@ -24,6 +24,8 @@ Establish the narrative concept and development scope, and begin prototyping the
 - Implemented the first browser-based interactive prototype using HTML5 Canvas and JavaScript.
 - Created a simplified 2.5D station environment and a character with an orange-red backpack.
 - Implemented three-lane movement using the left and right arrow keys.
+- Implemented continuous road-marking animation using requestAnimationFrame() to simulate forward movement.
+- Maintained keyboard-controlled lane switching during the animation.
 
 ### Development Evidence
 
@@ -53,6 +55,15 @@ Tested the prototype locally in a web browser.
 
 External playtesting has not yet been conducted.
 
+**Animation Test — 5 November 2026**
+
+- Confirmed that the road markings animate continuously.
+- Verified that the player can still switch lanes during animation.
+
+**Result:** The initial forward-motion effect works locally.
+
+**Limitation:** The prototype does not yet include moving obstacles, collision detection, or actual character running animations.
+
 ### Tutor Feedback
 
 To be completed after the tutorial meeting.
@@ -71,4 +82,7 @@ Individual responsibilities will be added after confirmation with the team.
 ### AI Assistance
 
 AI was used to assist with the structure and English drafting of project documentation. The team is responsible for reviewing and validating the content. AI assistance during coding and asset development will be documented as it occurs.
+
 AI also assisted in drafting the initial HTML Canvas prototype and keyboard movement code. The implementation was tested locally by a team member.
+
+AI assisted with implementing the Canvas animation loop and road-marking movement. The functionality was tested locally by a team member.
