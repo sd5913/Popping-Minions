@@ -39,6 +39,7 @@ const sandbox={
   performance:{now:()=>time},
   requestAnimationFrame:(fn)=>{callback=fn;},
   navigator:{},
+  window:{addEventListener:noop},
   Math
 };
 vm.createContext(sandbox);
@@ -66,6 +67,9 @@ assert.equal(lane(),2);
 interact();
 assert.equal(mode(),"dialogue");
 for(let i=0;i<4;i++)interact();
+assert.equal(mode(),"dialogue");
+assert.match(get("dialogText").textContent,/Then try this/);
+interact();
 assert.equal(mode(),"running");
 assert.equal(evalJs("s.hasPaper"),true);
 assert.equal(evalJs("s.npcDone"),true);
@@ -99,4 +103,39 @@ time+=200;
 for(let i=0;i<8;i++)frame();
 assert.equal(evalJs("s.collisions"),0);
 assert.equal(mode(),"running");
-console.log("PASS: chapter flow, NPC, inventory, paper bridge, finish, restart, fail-forward and jump.");
+// Pause should freeze game time/progress, resume and continue.
+reset();interact();
+key("p");
+assert.equal(mode(),"paused");
+const p=evalJs("s.progress");
+for(let i=0;i<25;i++)frame();
+assert.equal(evalJs("s.progress"),p);
+key("p");
+assert.equal(mode(),"running");
+frame();
+assert.ok(evalJs("s.progress")>p);
+
+// Alternative reply provides different NPC dialogue before the same pickup.
+reset();interact();
+evalJs('s.progress=104; s.mode="npc_wait"; s.lane=2;');
+interact();
+for(let i=0;i<3;i++)interact();
+key("ArrowRight");
+assert.equal(evalJs("s.choice"),1);
+interact();
+assert.match(get("dialogText").textContent,/another/);
+assert.equal(mode(),"dialogue");
+interact();
+assert.equal(mode(),"running");
+assert.equal(evalJs("s.hasPaper"),true);
+
+// Switching off the camera releases tracks and returns to keyboard input.
+let stopped=0,closed=0;
+sandbox.track=()=>{stopped++;};
+sandbox.closeModel=()=>{closed++;};
+evalJs("cameraEnabled=true; mediaStream={getTracks:()=>[{stop:track}]}; detector={close:closeModel}");
+get("cameraBtn").click();
+assert.equal(evalJs("cameraEnabled"),false);
+assert.equal(stopped,1);
+assert.equal(closed,1);
+console.log("PASS: chapter loop, alternate NPC reply, inventory, bridge, pause/resume, camera teardown, fail-forward and jump.");
