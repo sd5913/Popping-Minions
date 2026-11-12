@@ -36,7 +36,7 @@
 
   <h2>The Next Stop</h2>
   <canvas id="game" width="960" height="540"></canvas>
-  <p>Use ← and → to move between lanes</p>
+  <p>Use ←/→ to move · Space to jump · E to talk</p>
 
   <script>
     const canvas = document.getElementById("game");
@@ -53,6 +53,17 @@ let route = "main";
 let fallStartTime = 0;
 let fallProgress = 0;
 let jumpStartTime = -Infinity;
+
+// NPC interaction state
+let npcDialogIndex = -1;
+let npcFinished = false;
+
+const npcDialogues = [
+  ["Stranger", "You look worried. What happened?"],
+  ["Student", "I missed my train. I might miss my exam!"],
+  ["Stranger", "A different path is not the end of your journey."],
+  ["Student", "Maybe I can still find another way forward."]
+];
 
     function drawObstacle() {
   const y = 220 + obstacleProgress * 350;
@@ -192,6 +203,7 @@ let jumpStartTime = -Infinity;
     }
 
     document.addEventListener("keydown", (event) => {
+      if (npcDialogIndex >= 0) return;
       if (event.key === "ArrowLeft") {
         event.preventDefault();
         lane = Math.max(0, lane - 1);
@@ -206,6 +218,62 @@ let jumpStartTime = -Infinity;
     });
 
     
+function drawNPC() {
+  ctx.save();
+
+  // A simple NPC standing beside the lower road
+  ctx.fillStyle = "#75638f";
+  ctx.fillRect(730, 425, 40, 67);
+
+  ctx.fillStyle = "#f1bf9e";
+  ctx.beginPath();
+  ctx.arc(750, 409, 21, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = "#47364f";
+  ctx.fillRect(727, 383, 46, 12);
+
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#fff4dc";
+  ctx.font = "bold 17px Arial";
+  ctx.fillText("STRANGER", 750, 369);
+
+  if (!npcFinished && npcDialogIndex < 0) {
+    ctx.fillStyle = "#fff0aa";
+    ctx.font = "bold 18px Arial";
+    ctx.fillText("Press E to talk", 750, 520);
+  }
+  ctx.restore();
+}
+
+function drawNPCDialogue() {
+  if (npcDialogIndex < 0) return;
+
+  const [speaker, line] = npcDialogues[npcDialogIndex];
+
+  ctx.save();
+  ctx.fillStyle = "rgba(21, 31, 47, 0.96)";
+  ctx.fillRect(45, 325, 870, 185);
+
+  ctx.strokeStyle = "#9ceadf";
+  ctx.lineWidth = 3;
+  ctx.strokeRect(45, 325, 870, 185);
+
+  ctx.fillStyle = "#9ceadf";
+  ctx.font = "bold 25px Arial";
+  ctx.fillText(speaker, 75, 370);
+
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "21px Arial";
+  ctx.fillText(line, 75, 421, 810);
+
+  ctx.fillStyle = "#d6dce8";
+  ctx.font = "16px Arial";
+  ctx.fillText("Press E to continue", 75, 479);
+
+  ctx.restore();
+}
+
 function drawLowerRouteMessage() {
   ctx.fillStyle = "rgba(24, 54, 61, 0.88)";
   ctx.fillRect(20, 20, 335, 78);
@@ -233,7 +301,7 @@ function drawCollisionFeedback(timestamp) {
 }
 
 document.addEventListener("keydown", (event) => {
-  if (event.code !== "Space") return;
+  if (npcDialogIndex >= 0 || event.code !== "Space") return;
 
   event.preventDefault();
   if (event.repeat) return;
@@ -245,6 +313,20 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+document.addEventListener("keydown", (event) => {
+  if (event.key.toLowerCase() !== "e" || route !== "lower") return;
+  event.preventDefault();
+
+  if (event.repeat || npcFinished) return;
+
+  npcDialogIndex++;
+
+  if (npcDialogIndex >= npcDialogues.length) {
+    npcDialogIndex = -1;
+    npcFinished = true;
+  }
+});
+
 function animate(timestamp) {
   const deltaTime = lastFrameTime === null
     ? 0
@@ -253,7 +335,9 @@ function animate(timestamp) {
   lastFrameTime = timestamp;
 
   // Road movement
-  animationOffset = (animationOffset + deltaTime * 0.12) % 36;
+  if (npcDialogIndex < 0) {
+    animationOffset = (animationOffset + deltaTime * 0.12) % 36;
+  }
 
   // Obstacle movement
   const previousProgress = obstacleProgress;
@@ -294,6 +378,8 @@ function animate(timestamp) {
   drawCollisionFeedback(timestamp);
   if (route === "lower") {
     drawLowerRouteMessage();
+    drawNPC();
+    drawNPCDialogue();
   }
 
   requestAnimationFrame(animate);
