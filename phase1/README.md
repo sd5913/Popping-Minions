@@ -15,7 +15,7 @@ python3 -m http.server 8000
 
 Then visit **http://localhost:8000/phase1/**, choose **Enable webcam**, allow camera access, show one hand, and press **Center hand** to calibrate the neutral position. The hand-tracking library, WASM runtime, and hand model are loaded on demand from external CDNs; an internet connection is required the first time.
 
-If the camera or model cannot load, keyboard and on-screen controls remain usable.
+If the camera or model cannot load, keyboard and on-screen controls remain usable. You can click **Disable webcam** to return to keyboard-only input. Camera activation pauses an active run so you can calibrate safely; press **Resume** after calibration.
 
 ## Controls
 
@@ -26,7 +26,7 @@ If the camera or model cannot load, keyboard and on-screen controls remain usabl
 | Pinch thumb + index finger | Talk, confirm, use paper |
 | Left/Right arrow or A/D | Change lane / dialogue selection |
 | Space, Up arrow, W | Jump |
-| E or Enter | Interact / advance dialogue |
+| E or Enter | Interact / advance dialogue |\n| P | Pause / resume |
 | On-screen buttons | Touch/mouse fallback |
 
 ## Finish the chapter
@@ -45,7 +45,7 @@ Implemented in this prototype:
 - NPC stop, dialogue selection, and collection.
 - Persistent in-chapter inventory and item-use gate.
 - Visible bridge-building animation and chapter finish.
-- Optional camera input via MediaPipe Hand Landmarker.
+- Optional camera input via MediaPipe Hand Landmarker, including input throttling, recalibration and camera shutdown.\n- Pause/resume control and different NPC responses to dialogue choices.
 - Keyboard and on-screen fallback controls.
 
 Not yet part of this MVP:
