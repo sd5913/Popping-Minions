@@ -30,6 +30,21 @@ The prototype currently demonstrates basic movement, animated obstacles, collisi
 
 **Note:** A live web deployment is not currently available. Gesture controls, narrative integration, and additional levels are still under development.
 
+### Additional Playable Prototype — Ruins Run: Light Portal
+
+**[Play the Ruins Run: Light Portal Demo](https://ruins-run-portal.yxie7972.chatgpt.site/)**
+
+This is a separate interactive level prototype exploring a
+ruins-themed environment and portal-based visual direction.
+
+**Controls:** Left / Right Arrow to switch lanes, Space to jump.
+
+**Status:** Standalone prototype. Not yet integrated into the
+main `index.html` game.
+
+This prototype is included as evidence of the team's ongoing
+level design and interaction development.
+
 ## Current Prototype Features
 
 - Simplified 2.5D station environment
