@@ -1,17 +1,17 @@
 # Chapter 1 Playable MVP — The Standard Answer Avenue
 
-This is a **standalone playable development prototype**, not a replacement for the existing root \`index.html\`.
+This is a **standalone playable development prototype**, not a replacement for the existing root `index.html`.
 
 ## Run locally
 
-For **keyboard-only testing**, open \`phase1/index.html\` in a desktop browser.
+For **keyboard-only testing**, open `phase1/index.html` in a desktop browser.
 
 For **camera hand tracking**, use HTTPS or a local HTTP server:
 
-\`\`\`bash
+```bash
 cd Popping-Minions
 python3 -m http.server 8000
-\`\`\`
+```
 
 Then visit **http://localhost:8000/phase1/**, choose **Enable webcam**, allow camera access, show one hand, and press **Center hand** to calibrate the neutral position. The hand-tracking library, WASM runtime, and hand model are loaded on demand from external CDNs; an internet connection is required the first time.
 
@@ -53,6 +53,6 @@ Not yet part of this MVP:
 - Persistent save across sessions.
 - Fully verified multi-device camera performance.
 
-**Testing:** Run \`node --check phase1/game.js\` and \`node phase1/test-mvp.cjs\` (Node.js 18+). An automated workflow also checks both.
+**Testing:** Run `node --check phase1/game.js` and `node phase1/test-mvp.cjs` (Node.js 18+). An automated workflow also checks both.
 
 **Privacy:** This prototype processes webcam frames locally in the browser. It does not contain an upload path for camera video. MediaPipe JavaScript/WASM and the hand model are fetched from third-party CDNs when webcam mode is enabled.
