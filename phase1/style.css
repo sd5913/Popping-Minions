@@ -1,0 +1,44 @@
+:root { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color:#f5f2e9; background:#101b25; }
+* { box-sizing:border-box; }
+body { margin:0; min-height:100vh; background:radial-gradient(circle at 50% 0%,#24384b,#101b25 65%); }
+button { font:inherit; cursor:pointer; border:1px solid #627287; border-radius:10px; color:#f8f5ed; padding:9px 13px; background:#26394c; transition:background .12s; }
+button:hover:not(:disabled) { background:#3c5265; }
+button:focus-visible { outline:3px solid #f3c762; outline-offset:3px; }
+button:disabled { opacity:.4; cursor:not-allowed; }
+.shell { max-width:1190px; margin:0 auto; padding:24px 22px 14px; }
+.topbar { display:flex; flex-wrap:wrap; gap:18px; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.eyebrow { margin:0 0 6px; color:#e7ca84; font-size:11px; font-weight:800; letter-spacing:.18em; }
+h1 { font-size:clamp(20px,3vw,31px); letter-spacing:-.04em; margin:0; }
+.status { display:flex; flex-wrap:wrap; gap:9px; align-items:center; font-size:12px; }
+#cameraStatus { color:#c7d4da; max-width:235px; }
+.game-frame { position:relative; aspect-ratio:16/9; width:100%; border-radius:15px; overflow:hidden; border:2px solid #526270; box-shadow:0 18px 60px #07111a99; background:#91a6ae; }
+canvas { display:block; width:100%; height:100%; }
+.hud { position:absolute; inset:15px 16px auto; display:flex; justify-content:space-between; pointer-events:none; gap:10px; }
+.hud-left,.hud-right { display:flex; gap:6px; flex-wrap:wrap; }
+.chip { border:1px solid #ffffff55; border-radius:6px; color:#f8f8f4; background:#1b2a3dbd; padding:6px 9px; font-weight:750; letter-spacing:.06em; font-size:11px; }
+.mission { position:absolute; left:50%; transform:translateX(-50%); top:65px; text-align:center; max-width:70%; color:#fff3cf; background:#273743cb; padding:8px 18px; border-radius:24px; font-size:14px; pointer-events:none; }
+.camera-view { position:absolute; right:15px; bottom:14px; width:145px; height:109px; border:2px solid #f6e7b3; border-radius:9px; overflow:hidden; background:#101b25; pointer-events:none; }
+.camera-view[hidden] { display:none; }
+.camera-view video { width:100%; height:100%; object-fit:cover; transform:scaleX(-1); }
+.camera-view span { position:absolute; bottom:0; left:0; right:0; font-size:9px; letter-spacing:.08em; text-align:center; color:#f2efda; background:#0c1721bc; padding:3px; }
+.overlay { position:absolute; inset:0; background:#14283eb5; display:flex; align-items:center; justify-content:center; padding:16px; }
+.overlay[hidden],.choices[hidden] { display:none; }
+.dialog-card { width:min(640px, 100%); max-height:98%; overflow:auto; border-radius:14px; background:#182c39f0; border:2px solid #e3d2a0; padding:clamp(16px,2.4vw,28px); box-shadow:0 16px 36px #08121bc0; text-align:left; }
+.dialog-kicker { color:#f2d991; font-size:11px; letter-spacing:.14em; font-weight:800; margin:0 0 10px; }
+.dialog-card h2 { font-size:clamp(21px,3vw,30px); letter-spacing:-.025em; margin:0 0 14px; }
+.dialog-card p:not(.dialog-kicker) { font-size:clamp(13px,1.55vw,17px); line-height:1.5; }
+.dialog-card p.small-note { color:#c5d6dc; font-size:12px; margin:14px 0 0; }
+.primary { background:#e8b95e; color:#1a2730; border-color:#f6d68b; font-weight:800; padding:11px 19px; margin-top:9px; }
+.primary:hover:not(:disabled) { background:#ffce75; }
+.choices { display:grid; gap:9px; margin-top:14px; }
+.choice { text-align:left; background:#344657; color:white; border:2px solid transparent; }
+.choice.selected { border-color:#eeca78; background:#47576c; }
+.control-strip { margin-top:15px; display:flex; justify-content:space-between; gap:22px; align-items:center; flex-wrap:wrap; }
+.control-copy { display:flex; flex-direction:column; gap:5px; }
+.control-copy strong { color:#f2d991; font-size:14px; }
+.control-copy span,.footer-note { color:#bcc8d0; font-size:12px; }
+.touch-controls { display:flex; flex-wrap:wrap; gap:8px; }
+.touch-controls button { min-width:53px; touch-action:manipulation; }
+.touch-controls .action { border-color:#f5ce75; }
+.footer-note { margin:18px 0 8px; line-height:1.5; }
+@media (max-width:700px) { .shell { padding:10px; }.topbar { gap:8px; } .status { width:100%; justify-content:flex-start; } .game-frame { border-radius:9px; } .hud { top:7px; left:7px; right:7px; } .chip { padding:3px 5px; font-size:8px; } .mission { top:38px; max-width:90%; font-size:10px; padding:4px 9px; } .camera-view { width:80px; height:65px; right:5px; bottom:5px; } .camera-view span { font-size:6px; } .dialog-card { padding:11px; } .dialog-card p.small-note { font-size:9px; } .dialog-card h2 { font-size:16px; margin-bottom:4px; } .dialog-card p:not(.dialog-kicker) { font-size:11px; margin:5px 0; } .primary { padding:5px 9px; font-size:11px; } .choices { gap:4px; margin-top:5px; } .choice { padding:5px 8px; font-size:10px; } .control-copy span { font-size:11px; } }
