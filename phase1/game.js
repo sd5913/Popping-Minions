@@ -199,7 +199,7 @@ function togglePause() {
       "Resume", "Press P or E, or click Resume.");
   }
 }
-function manual() { manualUntil = performance.now() + 3000; }
+function manual() { manualUntil = performance.now() + 900; }
 function keyInput(event) {
   const k = event.key.toLowerCase();
   if (["arrowleft","arrowright"," ","arrowup","enter","e","p"].includes(k)) event.preventDefault();
@@ -215,8 +215,8 @@ $("leftBtn").addEventListener("click", () => { manual(); move(-1); });
 $("rightBtn").addEventListener("click", () => { manual(); move(1); });
 $("jumpBtn").addEventListener("click", () => { manual(); jump(); });
 $("actionBtn").addEventListener("click", () => { manual(); interact(); });
-ui.primary.addEventListener("click", () => { manual(); interact(); });
-ui.pauseBtn.addEventListener("click", () => { manual(); togglePause(); });
+ui.primary.addEventListener("click", () => { interact(); });
+ui.pauseBtn.addEventListener("click", () => { togglePause(); });
 
 function hitObstacle(o, now) {
   if (now < s.invulnerableUntil || s.route === "lower") return;
