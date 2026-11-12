@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#13212d">
+  <title>The Next Stop — Chapter 1 MVP</title>
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./game.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">THE NEXT STOP · PHASE 1 PLAYABLE</p>
+        <h1>The Standard Answer Avenue</h1>
+      </div>
+      <div class="status">
+        <span id="cameraStatus" role="status">Keyboard ready · camera optional</span>
+        <button id="cameraBtn" type="button">Enable webcam</button>
+        <button id="calibrateBtn" type="button" disabled>Center hand</button>
+        <button id="pauseBtn" type="button">Pause</button>
+      </div>
+    </header>
+
+    <section class="game-frame" aria-label="The Standard Answer Avenue playable runner">
+      <canvas id="game" width="960" height="540" aria-label="Three-lane perspective runner with pencil obstacles, a traveller and a paper bridge"></canvas>
+      <div class="hud" aria-live="off">
+        <div class="hud-left">
+          <span class="chip">CHAPTER 01</span>
+          <span class="chip" id="routeLabel">MAIN ROAD</span>
+        </div>
+        <div class="hud-right">
+          <span class="chip" id="progressLabel">0%</span>
+          <span class="chip" id="inventoryLabel">ITEM: NONE</span>
+        </div>
+      </div>
+      <div class="mission" id="mission" aria-live="polite">Find another way forward.</div>
+      <div class="camera-view" id="cameraView" hidden>
+        <video id="webcam" autoplay muted playsinline></video>
+        <span>LIVE HAND TRACKING</span>
+      </div>
+      <div class="overlay" id="overlay">
+        <div class="dialog-card">
+          <p class="dialog-kicker" id="dialogKicker">CHAPTER 01 · THE STANDARD ANSWER AVENUE</p>
+          <h2 id="dialogTitle">There is more than one correct path.</h2>
+          <p id="dialogText">Run through a city built from exam papers. Avoid obstacles, talk to a traveller, collect a folded paper and turn it into a bridge.</p>
+          <div id="choices" class="choices" hidden></div>
+          <button id="primaryBtn" class="primary" type="button">Start running</button>
+          <p class="small-note" id="dialogHint">Keyboard: ← → change lanes · Space jump · E interact. Webcam is optional.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="control-strip">
+      <div class="control-copy">
+        <strong id="actionHint">Move hand left / right to switch lanes</strong>
+        <span>Raise hand to jump · Pinch to interact · Keyboard fallback: ← →, Space, E</span>
+      </div>
+      <div class="touch-controls" aria-label="Manual controls">
+        <button type="button" id="leftBtn" aria-label="Move left">←</button>
+        <button type="button" id="jumpBtn" aria-label="Jump">↑ Jump</button>
+        <button type="button" id="rightBtn" aria-label="Move right">→</button>
+        <button type="button" id="actionBtn" class="action" aria-label="Interact">Interact / E</button>
+      </div>
+    </div>
+    <p class="footer-note">Prototype: progress is checkpoint-based, collisions never cause Game Over. Camera mode requires HTTPS or localhost and access to a MediaPipe model online.</p>
+  </main>
+</body>
+</html>
