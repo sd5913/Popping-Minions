@@ -94,7 +94,7 @@ assert.equal(evalJs("s.route"),"lower");
 // A timed jump must avoid the matching obstacle.
 reset();interact();
 evalJs("s.progress=16.9; s.lane=1;");
-key("Space");
+key(" ");
 time+=200;
 for(let i=0;i<8;i++)frame();
 assert.equal(evalJs("s.collisions"),0);
