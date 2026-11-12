@@ -44,17 +44,22 @@ let mediaStream = null;
 let cameraEnabled = false;
 let lastVideoTime = -1;
 let lastDetectAt = 0;
+let lastInferenceAt = 0;
 let hand = null;
 let neutralX = .5;
 let lastPinched = false;
+let pinchArmed = false;
 let lastHandY = null;
 let lastHandTime = 0;
 let lastJumpAt = 0;
 let lastActionAt = 0;
 let lastLaneAt = 0;
 let manualUntil = 0;
+let pausedFrom = null;
 
 function reset() {
+  pausedFrom = null;
+  ui.pauseBtn.textContent = "Pause";
   s = {
     mode:"intro", lane:1, progress:0, sceneTime:0,
     route:"main", lowerUntil:0, invulnerableUntil:0,
@@ -95,9 +100,13 @@ function choose(index) {
   if (s.mode === "dialogue") renderDialogue();
 }
 function renderDialogue() {
-  const [speaker, line] = SCRIPT[s.dialogueIndex];
+  const [speaker, line] = s.dialogueIndex === SCRIPT.length
+    ? ["Traveller", s.choice === 0
+      ? "Then try this. It may become something useful."
+      : "Of course. Even if this road fails, you can try another."]
+    : SCRIPT[s.dialogueIndex];
   showCard("NPC · THE HURRIED TRAVELLER", speaker, line,
-    s.dialogueIndex === SCRIPT.length - 1 ? "Take the paper" : "Continue",
+    s.dialogueIndex === SCRIPT.length ? "Take the paper" : "Continue",
     "Move left / right to choose · Pinch or press E to confirm.");
   if (s.dialogueIndex === SCRIPT.length - 1) {
     ui.choices.hidden = false;
@@ -113,7 +122,7 @@ function renderDialogue() {
   }
 }
 function advanceDialogue() {
-  if (s.dialogueIndex < SCRIPT.length - 1) {
+  if (s.dialogueIndex < SCRIPT.length) {
     s.dialogueIndex++;
     renderDialogue();
     return;
@@ -129,6 +138,7 @@ function interact() {
   if (now - lastActionAt < 260) return;
   lastActionAt = now;
   if (s.mode === "intro") { start(); return; }
+  if (s.mode === "paused") { togglePause(); return; }
   if (s.mode === "dialogue") { advanceDialogue(); return; }
   if (s.mode === "npc_wait") {
     if (s.lane !== 2) {
@@ -173,11 +183,28 @@ function jump() {
   s.jumpAt = now;
   lastJumpAt = now;
 }
+function togglePause() {
+  if (s.mode === "paused") {
+    s.mode = pausedFrom || "running";
+    pausedFrom = null;
+    ui.pauseBtn.textContent = "Pause";
+    hideCard();
+    message("Continue your journey.", 1.5);
+  } else if (["running", "recovering", "npc_wait", "bridge_wait", "building"].includes(s.mode)) {
+    pausedFrom = s.mode;
+    s.mode = "paused";
+    ui.pauseBtn.textContent = "Resume";
+    showCard("GAME PAUSED", "Take your time.",
+      "Resume when you are ready to continue. If your webcam is unavailable, disable it and use the keyboard.",
+      "Resume", "Press P or E, or click Resume.");
+  }
+}
 function manual() { manualUntil = performance.now() + 3000; }
 function keyInput(event) {
   const k = event.key.toLowerCase();
-  if (["arrowleft","arrowright"," ","arrowup","enter","e"].includes(k)) event.preventDefault();
+  if (["arrowleft","arrowright"," ","arrowup","enter","e","p"].includes(k)) event.preventDefault();
   if (event.repeat) return;
+  if (k === "p") { manual(); togglePause(); return; }
   if (k === "arrowleft" || k === "a") { manual(); move(-1); }
   if (k === "arrowright" || k === "d") { manual(); move(1); }
   if (k === " " || k === "arrowup" || k === "w") { manual(); jump(); }
@@ -189,6 +216,7 @@ $("rightBtn").addEventListener("click", () => { manual(); move(1); });
 $("jumpBtn").addEventListener("click", () => { manual(); jump(); });
 $("actionBtn").addEventListener("click", () => { manual(); interact(); });
 ui.primary.addEventListener("click", () => { manual(); interact(); });
+ui.pauseBtn.addEventListener("click", () => { manual(); togglePause(); });
 
 function hitObstacle(o, now) {
   if (now < s.invulnerableUntil || s.route === "lower") return;
@@ -203,6 +231,7 @@ function hitObstacle(o, now) {
   message("You fell, but found another road below.", 3.8);
 }
 function advance(dt, now) {
+  if (s.mode === "paused") return;
   s.sceneTime += dt;
   if (s.messageFor > 0) s.messageFor -= dt;
   if (s.mode === "recovering") {
@@ -254,6 +283,7 @@ function updateHud() {
   if (s.mode === "npc_wait") text = "Move RIGHT · Pinch / E to talk";
   if (s.mode === "bridge_wait") text = "Move CENTER · Pinch / E to use paper";
   if (s.mode === "building") text = "Paper bridge unfolding...";
+  if (s.mode === "paused") text = "Paused · press P or Resume";
   if (s.mode === "running" && cameraEnabled && performance.now() - lastDetectAt > 1700 && performance.now() > manualUntil) text = "Hand lost — show your hand or use keyboard";
   ui.mission.textContent = text;
   ui.actionHint.textContent = (s.mode === "dialogue") ? "Select a response · pinch / E to confirm" :
@@ -434,6 +464,7 @@ function calibrate() {
 ui.calibrateBtn.addEventListener("click", calibrate);
 async function enableCamera() {
   if (cameraEnabled) return;
+  if (s.mode === "running") togglePause();
   ui.cameraBtn.disabled = true;
   ui.camStatus.textContent = "Requesting permission / loading hand model...";
   try {
@@ -451,8 +482,13 @@ async function enableCamera() {
     });
     cameraEnabled=true;
     lastDetectAt=performance.now();
+    lastInferenceAt=0;
+    lastVideoTime=-1;
+    lastHandY=null;
+    pinchArmed=false;
     ui.camView.hidden=false;
-    ui.cameraBtn.textContent="Camera active";
+    ui.cameraBtn.textContent="Disable webcam";
+    ui.cameraBtn.disabled=false;
     ui.camStatus.textContent="Show one hand · use Center hand to calibrate";
     ui.calibrateBtn.disabled=false;
   } catch(err) {
@@ -465,7 +501,22 @@ async function enableCamera() {
     detector=null;cameraEnabled=false;
   }
 }
-ui.cameraBtn.addEventListener("click",enableCamera);
+function disableCamera() {
+  cameraEnabled=false;
+  if (mediaStream) mediaStream.getTracks().forEach(track=>track.stop());
+  mediaStream=null;
+  ui.video.srcObject=null;
+  if (detector && typeof detector.close === "function") detector.close();
+  detector=null;
+  hand=null;lastPinched=false;pinchArmed=false;lastHandY=null;
+  ui.camView.hidden=true;
+  ui.cameraBtn.textContent="Enable webcam";
+  ui.cameraBtn.disabled=false;
+  ui.calibrateBtn.disabled=true;
+  ui.camStatus.textContent="Keyboard / touch mode · webcam off";
+}
+ui.cameraBtn.addEventListener("click",()=>cameraEnabled?disableCamera():enableCamera());
+window.addEventListener("pagehide",disableCamera);
 function cameraLane(x, now) {
   if(now - lastLaneAt < 290) return;
   if(s.mode==="dialogue" && s.dialogueIndex===SCRIPT.length-1) {
@@ -477,13 +528,14 @@ function cameraLane(x, now) {
   }
 }
 function trackHand(now) {
-  if(!cameraEnabled || !detector || now-lastDetectAt<45) return;
+  if(!cameraEnabled || !detector || now-lastInferenceAt<80) return;
   if(ui.video.readyState<2 || ui.video.currentTime===lastVideoTime)return;
+  lastInferenceAt=now;
   lastVideoTime=ui.video.currentTime;
   try {
     const out=detector.detectForVideo(ui.video,now);
     const lm=out.landmarks && out.landmarks[0];
-    if(!lm) {hand=null;lastPinched=false;lastHandY=null;return;}
+    if(!lm) {hand=null;lastPinched=false;pinchArmed=false;lastHandY=null;return;}
     const palm={x:1-(lm[0].x+lm[5].x+lm[17].x)/3,
       y:(lm[0].y+lm[5].y+lm[17].y)/3};
     hand=palm;
@@ -491,9 +543,13 @@ function trackHand(now) {
     if(now>manualUntil) cameraLane(palm.x,now);
     const span=Math.hypot(lm[5].x-lm[17].x,lm[5].y-lm[17].y);
     const pinch=Math.hypot(lm[4].x-lm[8].x,lm[4].y-lm[8].y)/Math.max(.04,span);
-    if(pinch<.42 && !lastPinched && now>manualUntil) interact();
+    // A new pinch only counts after the hand has first been observed open.
+    if(pinch>.62) {lastPinched=false;pinchArmed=true;}
+    if(pinch<.42 && pinchArmed && !lastPinched && now>manualUntil) {
+      pinchArmed=false;
+      interact();
+    }
     if(pinch<.42)lastPinched=true;
-    if(pinch>.62)lastPinched=false;
     if(lastHandY!==null && now-lastHandTime<250 &&
       lastHandY-palm.y>.085 && now-lastJumpAt>900 && !lastPinched && now>manualUntil) {
       jump();
