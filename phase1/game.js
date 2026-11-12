@@ -11,7 +11,7 @@ const ui = {
   choices: $("choices"), mission: $("mission"), progress: $("progressLabel"),
   inventory: $("inventoryLabel"), route: $("routeLabel"),
   actionHint: $("actionHint"), camStatus: $("cameraStatus"),
-  cameraBtn: $("cameraBtn"), calibrateBtn: $("calibrateBtn"),
+  cameraBtn: $("cameraBtn"), calibrateBtn: $("calibrateBtn"), pauseBtn: $("pauseBtn"),
   camView: $("cameraView"), video: $("webcam")
 };
 const SPEED = 5.1;
