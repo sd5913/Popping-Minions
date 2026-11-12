@@ -2,9 +2,13 @@
 
 This is a **standalone playable development prototype**, not a replacement for the existing root `index.html`.
 
+## Playtest build
+
+A downloadable version is packaged automatically by GitHub Actions for each Phase 1 commit. Open the latest successful **Phase 1 MVP checks** workflow run, scroll to **Artifacts**, and download **the-next-stop-chapter1-playtest**. Extract it before playing. GitHub login may be required to access workflow artifacts.
+
 ## Run locally
 
-For **keyboard-only testing**, open `phase1/index.html` in a desktop browser.
+For **keyboard-only testing**, open `phase1/index.html` in a desktop browser. In the downloaded artifact, the file is simply `index.html`.
 
 For **camera hand tracking**, use HTTPS or a local HTTP server:
 
@@ -13,7 +17,7 @@ cd Popping-Minions
 python3 -m http.server 8000
 ```
 
-Then visit **http://localhost:8000/phase1/**, choose **Enable webcam**, allow camera access, show one hand, and press **Center hand** to calibrate the neutral position. The hand-tracking library, WASM runtime, and hand model are loaded on demand from external CDNs; an internet connection is required the first time.
+Then visit **http://localhost:8000/phase1/** (or **http://localhost:8000/** if running the server inside the extracted artifact folder), choose **Enable webcam**, allow camera access, show one hand, and press **Center hand** to calibrate the neutral position. The hand-tracking library, WASM runtime, and hand model are loaded on demand from external CDNs; an internet connection is required the first time.
 
 If the camera or model cannot load, keyboard and on-screen controls remain usable. You can click **Disable webcam** to return to keyboard-only input. Camera activation pauses an active run so you can calibrate safely; press **Resume** after calibration.
 
@@ -26,7 +30,8 @@ If the camera or model cannot load, keyboard and on-screen controls remain usabl
 | Pinch thumb + index finger | Talk, confirm, use paper |
 | Left/Right arrow or A/D | Change lane / dialogue selection |
 | Space, Up arrow, W | Jump |
-| E or Enter | Interact / advance dialogue |\n| P | Pause / resume |
+| E or Enter | Interact / advance dialogue |
+| P | Pause / resume |
 | On-screen buttons | Touch/mouse fallback |
 
 ## Finish the chapter
@@ -45,7 +50,8 @@ Implemented in this prototype:
 - NPC stop, dialogue selection, and collection.
 - Persistent in-chapter inventory and item-use gate.
 - Visible bridge-building animation and chapter finish.
-- Optional camera input via MediaPipe Hand Landmarker, including input throttling, recalibration and camera shutdown.\n- Pause/resume control and different NPC responses to dialogue choices.
+- Optional camera input via MediaPipe Hand Landmarker, including input throttling, recalibration and camera shutdown.
+- Pause/resume control and different NPC responses to dialogue choices.
 - Keyboard and on-screen fallback controls.
 
 Not yet part of this MVP:
