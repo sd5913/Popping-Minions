@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>遗迹跑道 · 光门</title>
+  <link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+
+  <canvas aria-label="遗迹跑道第一人称跑酷游戏"></canvas>
+
+  <header>
+    <strong>遗迹跑道</strong>
+    <output aria-live="polite">准备开始</output>
+  </header>
+
+  <!-- Camera Control Panel -->
+  <aside id="camera-panel">
+
+    <div class="camera-heading">
+      <strong>CAMERA CONTROL</strong>
+      <span id="camera-status">OFFLINE</span>
+    </div>
+
+    <div class="camera-preview">
+      <video
+        id="camera-video"
+        autoplay
+        muted
+        playsinline>
+      </video>
+
+      <canvas id="hand-overlay"></canvas>
+
+      <div id="camera-placeholder">
+        <span>📷</span>
+        <p>等待摄像头启动</p>
+      </div>
+    </div>
+
+    <div id="gesture-status">
+      等待手势识别
+    </div>
+
+    <button id="camera-start" type="button">
+      开启摄像头
+    </button>
+
+    <button id="camera-stop" type="button" disabled>
+      关闭摄像头
+    </button>
+
+  </aside>
+
+  <footer>
+    <small>
+      ← → 换道 · 空格跳跃 · 触屏滑动
+    </small>
+
+    <button id="pause" type="button">暂停</button>
+
+    <button id="restart" type="button">重开</button>
+  </footer>
+
+  <script src="src/game.js"></script>
+  <script type="module" src="src/camera.js"></script>
+
+</body>
+</html>
