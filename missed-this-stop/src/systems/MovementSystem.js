@@ -1,18 +1,18 @@
-
 export class MovementSystem {
   constructor() {
     this.lane = 1;
     this.visualLane = 1;
-
+    this.previousVisualLane = 1;
+    this.laneLean = 0;
     this.jumpHeight = 0;
+    this.jumpVelocity = 0;
     this.isJumping = false;
-    this.jumpTime = 0;
-    this.jumpDuration = 0.8;
-
-    this.forwardSpeed = 0.5;
+    this.gravity = 15.5;
+    this.jumpImpulse = 6.15;
+    this.landingImpact = 0;
+    this.forwardSpeed = 0;
     this.stumbleTime = 0;
-    this.stumbleDuration = 1.1;
-
+    this.stumbleDuration = 0.9;
     this.distance = 0;
   }
 
@@ -26,15 +26,15 @@ export class MovementSystem {
 
   jump() {
     if (this.isJumping || this.stumbleTime > 0) return;
-
     this.isJumping = true;
-    this.jumpTime = 0;
+    this.jumpVelocity = this.jumpImpulse;
+    this.landingImpact = 0;
   }
 
   stumble() {
     this.stumbleTime = this.stumbleDuration;
 
-    // 失误后进入相邻支路，不重置游戏
+    // A mistake changes the route, but never ends or resets the run.
     if (this.lane === 1) {
       this.lane = Math.random() > 0.5 ? 0 : 2;
     } else {
@@ -44,41 +44,45 @@ export class MovementSystem {
 
   update(deltaTime, speed) {
     this.forwardSpeed = speed;
+    this.previousVisualLane = this.visualLane;
 
-    const smoothing = Math.min(1, deltaTime * 9);
+    const laneSmoothing = 1 - Math.exp(-deltaTime * 10.5);
+    this.visualLane += (this.lane - this.visualLane) * laneSmoothing;
 
-    this.visualLane +=
-      (this.lane - this.visualLane) * smoothing;
+    const laneVelocity = deltaTime > 0
+      ? (this.visualLane - this.previousVisualLane) / deltaTime
+      : 0;
+    const targetLean = Math.max(-1, Math.min(1, laneVelocity * 0.12));
+    const leanSmoothing = 1 - Math.exp(-deltaTime * 12);
+    this.laneLean += (targetLean - this.laneLean) * leanSmoothing;
 
     this.distance += speed * deltaTime;
 
     if (this.isJumping) {
-      this.jumpTime += deltaTime;
+      this.jumpVelocity -= this.gravity * deltaTime;
+      this.jumpHeight += this.jumpVelocity * deltaTime;
 
-      const progress = Math.min(
-        this.jumpTime / this.jumpDuration,
-        1
-      );
-
-      this.jumpHeight =
-        Math.sin(progress * Math.PI) * 1;
-
-      if (progress >= 1) {
-        this.isJumping = false;
+      if (this.jumpHeight <= 0) {
         this.jumpHeight = 0;
+        this.jumpVelocity = 0;
+        this.isJumping = false;
+        this.landingImpact = 1;
       }
     }
 
-    if (this.stumbleTime > 0) {
-      this.stumbleTime -= deltaTime;
+    this.landingImpact = Math.max(0, this.landingImpact - deltaTime * 4.8);
 
-      if (this.stumbleTime < 0) {
-        this.stumbleTime = 0;
-      }
+    if (this.stumbleTime > 0) {
+      this.stumbleTime = Math.max(0, this.stumbleTime - deltaTime);
     }
   }
 
   get isStumbling() {
     return this.stumbleTime > 0;
+  }
+
+  get stumbleRatio() {
+    if (!this.isStumbling) return 0;
+    return this.stumbleTime / this.stumbleDuration;
   }
 }

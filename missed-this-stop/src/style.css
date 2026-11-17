@@ -50,6 +50,7 @@ button {
   display: block;
   width: 100%;
   height: 100%;
+  touch-action: none;
 }
 
 .hidden {
@@ -89,6 +90,7 @@ button {
   color: rgba(255, 255, 255, 0.75);
   font-size: 11px;
   letter-spacing: 2px;
+  text-align: right;
 }
 
 .small-button {
@@ -304,6 +306,12 @@ button {
   .hud-top {
     top: 16px;
     right: 16px;
+  }
+
+  .speed-label {
+    max-width: 170px;
+    font-size: 8px;
+    line-height: 1.5;
   }
 
   .bottom-hint {

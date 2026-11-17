@@ -136,7 +136,10 @@ export class HUD {
     if (status.state === "dialogue") {
       label.textContent = "SLOWING DOWN";
     } else {
-      label.textContent = "MOVING FORWARD";
+      const motion = status.jumping ? "AIRBORNE" : "MOVING FORWARD";
+      label.textContent =
+        `${motion} · ${Math.round(status.speed)} M/S · ` +
+        `LANE ${status.lane + 1} · ${status.mistakes} MISSTEPS`;
     }
   }
 
