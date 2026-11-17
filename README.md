@@ -1,104 +1,130 @@
-# Popping-Minions
-# The Next Stop
+# The Next Stop — Missed This Stop
 
 **SD5913 Group Project 2026 | Team Popping Minions**
 
-*Failure is not the end. Sometimes, it leads to another path.*
+> *Failure is not the end. Sometimes, it leads to another path.*
+
+## Play the Game
+
+<https://popping-minions.pages.dev/>
+
+This is the team's official production deployment on Cloudflare Pages. Open the link above to play the current published build.
 
 ## About the Game
 
-**The Next Stop** is an interactive narrative adventure game about a young person who believes that missing an important examination means losing their future.
+**The Next Stop** (playable title: **Missed This Stop**) is a first-person narrative running game about a young person who believes that missing an important examination means losing their future.
 
-While rushing to the examination venue, the protagonist boards a train and encounters several surreal worlds. Through unexpected mistakes, alternative routes, and encounters with others, the protagonist gradually discovers that life does not have only one correct destination.
+The protagonist rushes towards an exam, but the journey takes them through a series of unexpected environments and encounters. As the road changes, the player discovers that a mistake does not have to end the journey—and that there may be more than one way forward.
 
-**Target Audience:** Young adults and students experiencing academic pressure, uncertainty about the future, and anxiety about falling behind their peers.
+**Core message:** Important opportunities deserve our effort, but they do not define our entire lives.
 
-## Play the Prototype
+**Target audience:** Young adults and students experiencing academic pressure, uncertainty about the future, or anxiety about falling behind.
 
-**Current Status:** Early playable prototype
+## Current Game Experience
 
-The current interactive prototype is available in this repository as `index.html`.
+The current game prototype is organized as a continuous journey across six narrative sections:
 
-To try the game:
+1. **Prologue — Can't Be Late**
+2. **Chapter 1 — Standard Answer Avenue**
+3. **Chapter 2 — Everyone's Own Pace**
+4. **Chapter 3 — After the Mistake**
+5. **Chapter 4 — A River Without a Route**
+6. **Epilogue — Missed This Stop**
 
-1. Click **Code → Download ZIP** on this GitHub repository.
-2. Extract the downloaded ZIP file.
-3. Open `index.html` in a desktop web browser.
-4. Use the left and right arrow keys to change lanes, and press Space to jump.
+The current codebase includes:
 
-The prototype currently demonstrates basic movement, animated obstacles, collision feedback, and alternative-route progression.
+- First-person Canvas 2D game rendering.
+- Three-lane movement and animated lane transitions.
+- Jumping and obstacle collision detection.
+- Mistake feedback and recovery that allow the run to continue rather than restarting.
+- Chapter-specific environments, movement speeds, and obstacle types.
+- Character dialogue, chapter transitions, pause/resume, and an ending sequence.
+- Keyboard controls and swipe gestures on the game canvas.
 
-**Note:** A live web deployment is not currently available. Gesture controls, narrative integration, and additional levels are still under development.
-
-### Additional Playable Prototype — Ruins Run: Light Portal
-
-**[Play the Ruins Run: Light Portal Demo](https://ruins-run-portal.yxie7972.chatgpt.site/)**
-
-This is a separate interactive level prototype exploring a
-ruins-themed environment and portal-based visual direction.
-
-**Controls:** Left / Right Arrow to switch lanes, Space to jump.
-
-**Status:** Standalone prototype. Not yet integrated into the
-main `index.html` game.
-
-This prototype is included as evidence of the team's ongoing
-level design and interaction development.
-
-## Current Prototype Features
-
-- Simplified 2.5D station environment
-- Three-lane player movement
-- Continuous road animation
-- Perspective-scaled moving obstacles
-- Basic collision detection and visual feedback
-- Alternative-route transition after collision
-- Keyboard-controlled jump animation
-- Continued gameplay without a Game Over screen
+The project is still under development. Gesture input currently refers to touch/pointer swipe controls; camera-based hand tracking and facial/body motion capture are not claimed as implemented in this build.
 
 ## Controls
 
 | Input | Action |
 |---|---|
-| Left Arrow | Move left |
-| Right Arrow | Move right |
-| Space | Jump |
+| Left Arrow / A | Move left |
+| Right Arrow / D | Move right |
+| Space / Up Arrow | Jump |
+| Swipe left / right on the game canvas | Change lane |
+| Swipe up on the game canvas | Jump |
+| Enter | Interact / continue dialogue or chapter |
+| Escape | Pause / resume |
+| Pause button | Pause / resume |
 
-**Note:** Jumping is currently a visual interaction and is not yet connected to collision avoidance.
+During dialogue and chapter transition screens, use **Enter** or the on-screen button to continue.
 
-Gesture-based controls are planned for later development.
+## Run Locally
 
-## How to Run Locally
+The main Vite application is in the `missed-this-stop/` directory.
 
-### Prerequisites
+### Requirements
 
-- A desktop computer
-- A web browser with JavaScript enabled
+- Node.js with npm
+- A modern desktop browser
 
-### Instructions
+### Start the development server
 
-1. Download or clone this repository.
-2. Open `index.html` in your web browser.
-3. Use the keyboard controls to interact with the prototype.
+```bash
+cd missed-this-stop
+npm install
+npm run dev
+```
 
-No additional installation is currently required.
+Open the local URL printed by Vite in your browser.
 
-**Platform and Limitations:** The prototype has been tested locally in a desktop browser. Cross-browser compatibility, mobile support, and gesture recognition have not yet been fully tested.
+### Create a production build
 
-## Narrative and Level Design
+```bash
+cd missed-this-stop
+npm install
+npm run build
+npm run preview
+```
 
-The planned game consists of six narrative sections:
+Vite outputs the production files to `missed-this-stop/dist/`.
 
-1. **Prologue — Don't Be Late**
-2. **Chapter 1 — The Standard Answer Avenue**
-3. **Chapter 2 — Everyone's Own Pace**
-4. **Chapter 3 — After the Fall**
-5. **Chapter 4 — A River Without a Route**
-6. **Epilogue — The Next Step**
+## Repository Structure
 
-Each environment explores a different relationship between progress, expectations, failure, and personal choice.
+```text
+Popping-Minions/
+├── .github/                 # GitHub workflows
+├── docs/
+│   ├── GAME_CONCEPT.md      # Narrative and game concept
+│   ├── PROGRESS.md          # Development log and testing notes
+│   └── CREDITS.md           # Team contributions and AI/asset credits
+├── missed-this-stop/        # Main Vite game application
+│   ├── index.html
+│   ├── package.json
+│   └── src/
+│       ├── chapters/        # Chapter data and dialogue
+│       ├── controls/        # Keyboard and pointer input
+│       ├── core/            # Game loop and scene management
+│       ├── rendering/       # First-person Canvas renderer
+│       ├── systems/         # Movement and collision systems
+│       ├── ui/              # HUD and game screens
+│       └── main.js
+├── index.html               # Earlier standalone Canvas prototype
+└── README.md
+```
 
-Read the [Game Concept Document](docs/GAME_CONCEPT.md) for more details.
+The root-level `index.html` is an earlier standalone prototype. The current modular Vite application is maintained in `missed-this-stop/`.
+
+## Narrative and Visual Direction
+
+The six sections explore progress, expectations, mistakes, different life rhythms, uncertainty, and personal choice.
+
+Three visual elements connect the journey:
+
+1. The protagonist's orange-red backpack.
+2. A road or pathway extending towards the distance.
+3. Recurring circular imagery, such as clocks, wheels, tunnels, and ripples.
+
+For the fuller narrative and design rationale, see [Game Concept](docs/GAME_CONCEPT.md).
 
 ## Team and Contributions
 
@@ -120,38 +146,34 @@ This project follows an iterative development process with weekly tutor reviews.
 
 | Date | Milestone |
 |---|---|
-| 5 Nov 2026 | First Working Interaction |
-| 12 Nov 2026 | Integrated Core Experience |
-| 19 Nov 2026 | Playtest and Feedback |
-| 26 Nov 2026 | Delivery Candidate |
-| 3 Dec 2026 | Final Tutor Review |
-| 6 Dec 2026 | Final Submission |
+| 5 Nov 2026 | Initial browser prototype and core movement experiments |
+| 12 Nov 2026 | Narrative and gameplay integration work |
+| 17 Nov 2026 | First-person runner prototype merged into `main`; Cloudflare production deployment triggered |
 
-Read the [Development Progress Log](docs/PROGRESS.md) for completed milestones, testing evidence, development decisions, challenges, and next steps.
+See the [Development Progress Log](docs/PROGRESS.md) for implementation notes, testing evidence, challenges, and next steps.
 
-**GitHub Project Board:** Link to be added after setup.
+## Technologies
 
-## Technologies and AI Assistance
+- HTML5 Canvas 2D
+- JavaScript (ES modules)
+- CSS
+- Vite
+- GitHub and GitHub Actions
+- Cloudflare Pages
 
-**Development:** HTML5 Canvas, JavaScript, CSS, GitHub, and GitHub Actions.
-
-**AI-assisted development:** ChatGPT, Jimeng AI, Doubao, and other tools documented as applicable.
-
-The team evaluates, adapts, and tests AI-assisted outputs. Specific asset credits and relevant usage rights are maintained in [CREDITS.md](docs/CREDITS.md).
+AI tools have supported concept exploration, programming assistance, debugging, and documentation. The team reviews and tests project outputs. See [CREDITS.md](docs/CREDITS.md) for the current credits record.
 
 ## Current Development Priorities
 
-- Connect jumping to obstacle avoidance.
-- Improve the lower-route transition.
-- Integrate narrative sequences and visual assets.
-- Prototype gesture-based controls.
-- Conduct external playtesting.
-- Prepare a continuously playable core experience.
+- Continue playtesting the complete chapter flow.
+- Refine obstacle timing, collision feedback, and recovery.
+- Improve narrative pacing and dialogue presentation.
+- Continue visual and audio development.
+- Explore camera-based gesture and motion input as future work.
 
 ## Submission
 
-**Course:** SD5913 — Group Project 2026
-
-**Repository:** https://github.com/sd5913/Popping-Minions
-
-**Final Deadline:** 6 December 2026, 23:59 Hong Kong Time.
+**Course:** SD5913 — Group Project 2026  
+**Repository:** <https://github.com/sd5913/Popping-Minions>  
+**Official game:** <https://popping-minions.pages.dev/>  
+**Final deadline:** 6 December 2026, 23:59 Hong Kong Time.
