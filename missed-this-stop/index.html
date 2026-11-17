@@ -1,0 +1,87 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111923" />
+    <title>Missed This Stop</title>
+    <meta
+      name="description"
+      content="A first-person narrative running game about time, failure and finding another way."
+    />
+  </head>
+  <body>
+    <main id="game">
+      <canvas id="game-canvas"></canvas>
+
+      <div class="game-brand">MISSED THIS STOP</div>
+      <div class="chapter-label" id="chapter-label">PROLOGUE</div>
+
+      <div class="hud-top">
+        <div class="speed-label" id="speed-label">MOVING FORWARD</div>
+        <button id="pause-button" class="small-button">PAUSE</button>
+      </div>
+
+      <div class="crosshair">+</div>
+
+      <div id="message" class="message"></div>
+
+      <section id="title-screen" class="screen">
+        <div class="screen-content">
+          <p class="eyebrow">A FIRST-PERSON NARRATIVE GAME</p>
+          <h1>MISSED<br />THIS STOP</h1>
+          <p class="subtitle">
+            Sometimes the road changes.<br />
+            That doesn't mean the journey ends.
+          </p>
+          <button id="start-button" class="primary-button">
+            START JOURNEY
+          </button>
+          <p class="control-hint">
+            ← → MOVE &nbsp; · &nbsp; SPACE JUMP
+          </p>
+        </div>
+      </section>
+
+      <section id="dialogue-screen" class="dialogue-screen hidden">
+        <div class="dialogue-card">
+          <div id="speaker" class="speaker">TRAVELLER</div>
+          <p id="dialogue-text"></p>
+          <button id="dialogue-next" class="text-button">
+            CONTINUE →
+          </button>
+        </div>
+      </section>
+
+      <section id="transition-screen" class="transition-screen hidden">
+        <p id="transition-eyebrow">NEXT CHAPTER</p>
+        <h2 id="transition-title"></h2>
+        <p id="transition-description"></p>
+        <button id="transition-button" class="primary-button">
+          CONTINUE
+        </button>
+      </section>
+
+      <section id="ending-screen" class="screen hidden">
+        <div class="screen-content ending-content">
+          <p class="eyebrow">THE END OF THIS JOURNEY</p>
+          <h1>THIS TIME,<br />WHAT'S NEXT?</h1>
+          <p class="subtitle">
+            You missed this stop.<br />
+            What happens next?
+          </p>
+          <button id="ending-button" class="primary-button">
+            STEP FORWARD
+          </button>
+        </div>
+      </section>
+
+      <div class="bottom-hint" id="bottom-hint">
+        ← → / SWIPE TO CHANGE LANE · SPACE / SWIPE UP TO JUMP
+      </div>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
