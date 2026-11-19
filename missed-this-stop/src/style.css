@@ -1,329 +1,847 @@
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+/* =========================================
+   MISSED THIS STOP
+   Main Game Stylesheet
+   Version 2.0 - Multimodal Input UI
+========================================= */
+
+/* =========================================
+   1. GLOBAL SETTINGS
+========================================= */
 
 :root {
-  font-family: 'DM Sans', sans-serif;
-  color: #f3eee4;
-  background: #111923;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+  --bg-dark: #111923;
+  --bg-panel: rgba(17, 25, 35, 0.92);
 
-  --gold: #e6b47c;
-  --gold-light: #f6d7a9;
-  --dark: #111923;
-  --panel: rgba(17, 25, 35, 0.91);
+  --text-main: #f3eee4;
+  --text-muted: #aab2bb;
+
+  --accent: #e9b77d;
+  --accent-hover: #f3ca98;
+
+  --border: rgba(243, 238, 228, 0.2);
+
+  --font-main: Arial, Helvetica, sans-serif;
 }
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html,
 body {
   width: 100%;
   height: 100%;
-  margin: 0;
   overflow: hidden;
 }
 
 body {
-  background: var(--dark);
+  background: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
 }
 
-button {
-  font: inherit;
-  cursor: pointer;
-}
+/* =========================================
+   2. GAME CONTAINER
+========================================= */
 
 #game {
   position: relative;
+
   width: 100vw;
   height: 100vh;
+
+  min-height: 480px;
+
   overflow: hidden;
-  background: var(--dark);
+
+  background: var(--bg-dark);
+  isolation: isolate;
 }
+
+/* Main Game Canvas */
 
 #game-canvas {
   position: absolute;
+
   inset: 0;
+
   display: block;
+
   width: 100%;
   height: 100%;
-  touch-action: none;
+
+  z-index: 0;
 }
+
+/* =========================================
+   3. GAME BRAND
+========================================= */
+
+.game-brand {
+  position: absolute;
+
+  top: 30px;
+  left: 36px;
+
+  z-index: 10;
+
+  color: rgba(255, 255, 255, 0.9);
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 4px;
+
+  pointer-events: none;
+}
+
+/* =========================================
+   4. CHAPTER LABEL
+========================================= */
+
+.chapter-label {
+  position: absolute;
+
+  top: 30px;
+  right: 36px;
+
+  z-index: 10;
+
+  color: var(--accent);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  pointer-events: none;
+}
+
+/* =========================================
+   5. TOP HUD
+========================================= */
+
+.hud-top {
+  position: absolute;
+
+  top: 70px;
+  left: 36px;
+  right: 36px;
+
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  pointer-events: none;
+}
+
+.speed-label {
+  color: var(--text-muted);
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 2px;
+
+  pointer-events: none;
+}
+
+/* HUD Controls */
+
+.hud-controls {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  pointer-events: auto;
+}
+
+/* =========================================
+   6. CAMERA STATUS
+========================================= */
+
+#camera-status {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 105px;
+
+  padding: 9px 13px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  border-radius: 3px;
+
+  background: rgba(17, 25, 35, 0.65);
+
+  color: #b7c0ca;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  white-space: nowrap;
+}
+
+/* Camera Enabled State
+   Add this class using JavaScript later:
+   camera-active
+*/
+
+#camera-status.camera-active {
+  color: #9de0b0;
+
+  border-color: rgba(113, 209, 143, 0.5);
+
+  background: rgba(42, 110, 68, 0.25);
+}
+
+/* Camera Error State */
+
+#camera-status.camera-error {
+  color: #ff9d91;
+
+  border-color: rgba(255, 120, 100, 0.5);
+}
+
+/* =========================================
+   7. BUTTONS
+========================================= */
+
+button {
+  font-family: inherit;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Small HUD Buttons */
+
+.small-button {
+  min-height: 36px;
+
+  padding: 0 16px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 3px;
+
+  background: rgba(17, 25, 35, 0.75);
+
+  color: var(--text-main);
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  white-space: nowrap;
+}
+
+.small-button:hover {
+  border-color: var(--accent);
+
+  color: var(--accent);
+
+  background: rgba(233, 183, 125, 0.1);
+}
+
+.small-button:active {
+  transform: scale(0.96);
+}
+
+/* Camera Button */
+
+#camera-button {
+  border-color: rgba(233, 183, 125, 0.55);
+
+  color: var(--accent);
+}
+
+#camera-button:hover {
+  background: rgba(233, 183, 125, 0.15);
+}
+
+/* Camera Enabled Button */
+
+#camera-button.camera-enabled {
+  border-color: #83c99b;
+
+  color: #9de0b0;
+}
+
+/* Primary Buttons */
+
+.primary-button {
+  min-width: 190px;
+
+  min-height: 48px;
+
+  padding: 0 28px;
+
+  border: none;
+
+  border-radius: 3px;
+
+  background: var(--accent);
+
+  color: #17212a;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.primary-button:hover {
+  background: var(--accent-hover);
+
+  transform: translateY(-2px);
+}
+
+.primary-button:active {
+  transform: translateY(0);
+}
+
+/* Text Buttons */
+
+.text-button {
+  padding: 10px 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: var(--accent);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.text-button:hover {
+  color: #fff;
+}
+
+/* =========================================
+   8. CROSSHAIR
+========================================= */
+
+.crosshair {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  z-index: 5;
+
+  transform: translate(-50%, -50%);
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 23px;
+  font-weight: 300;
+
+  pointer-events: none;
+}
+
+/* =========================================
+   9. GAME MESSAGE
+========================================= */
+
+.message {
+  position: absolute;
+
+  top: 23%;
+  left: 50%;
+
+  z-index: 30;
+
+  transform: translateX(-50%);
+
+  max-width: 85%;
+
+  padding: 12px 22px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 3px;
+
+  background: var(--bg-panel);
+
+  color: var(--accent);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  text-align: center;
+}
+
+/* =========================================
+   10. TITLE SCREEN
+========================================= */
+
+.screen {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 40;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  background: rgba(12, 19, 28, 0.68);
+
+  text-align: center;
+}
+
+.screen-content {
+  width: 100%;
+  max-width: 650px;
+}
+
+.eyebrow {
+  margin-bottom: 25px;
+
+  color: var(--accent);
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 4px;
+}
+
+.screen h1 {
+  margin-bottom: 25px;
+
+  color: var(--text-main);
+
+  font-size: clamp(42px, 8vw, 88px);
+
+  line-height: 0.95;
+
+  font-weight: 800;
+
+  letter-spacing: -3px;
+}
+
+.subtitle {
+  margin-bottom: 35px;
+
+  color: #c2c8ce;
+
+  font-size: 14px;
+
+  line-height: 1.9;
+}
+
+.control-hint {
+  margin-top: 26px;
+
+  color: #aab2bb;
+
+  font-size: 10px;
+
+  letter-spacing: 2px;
+}
+
+/* =========================================
+   11. DIALOGUE SCREEN
+========================================= */
+
+.dialogue-screen {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 50;
+
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: center;
+
+  padding: 40px;
+
+  background: linear-gradient(
+    to top,
+    rgba(8, 14, 22, 0.85),
+    transparent 65%
+  );
+}
+
+.dialogue-card {
+  width: 100%;
+  max-width: 760px;
+
+  padding: 28px 32px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 4px;
+
+  background: var(--bg-panel);
+
+  backdrop-filter: blur(12px);
+}
+
+.speaker {
+  margin-bottom: 15px;
+
+  color: var(--accent);
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+}
+
+#dialogue-text {
+  margin-bottom: 20px;
+
+  color: var(--text-main);
+
+  font-size: 16px;
+
+  line-height: 1.8;
+}
+
+/* =========================================
+   12. CHAPTER TRANSITION
+========================================= */
+
+.transition-screen {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 50;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  background: rgba(13, 20, 29, 0.94);
+
+  text-align: center;
+}
+
+#transition-eyebrow {
+  margin-bottom: 22px;
+
+  color: var(--accent);
+
+  font-size: 11px;
+
+  letter-spacing: 4px;
+}
+
+#transition-title {
+  margin-bottom: 20px;
+
+  color: var(--text-main);
+
+  font-size: clamp(30px, 5vw, 55px);
+
+  line-height: 1.15;
+}
+
+#transition-description {
+  max-width: 480px;
+
+  margin-bottom: 35px;
+
+  color: var(--text-muted);
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+/* =========================================
+   13. ENDING SCREEN
+========================================= */
+
+.ending-content {
+  max-width: 700px;
+}
+
+.ending-content h1 {
+  font-size: clamp(38px, 7vw, 76px);
+}
+
+/* =========================================
+   14. BOTTOM HINT
+========================================= */
+
+.bottom-hint {
+  position: absolute;
+
+  bottom: 28px;
+  left: 50%;
+
+  z-index: 15;
+
+  transform: translateX(-50%);
+
+  width: max-content;
+  max-width: 90%;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 10px;
+
+  letter-spacing: 1.5px;
+
+  text-align: center;
+
+  pointer-events: none;
+}
+
+/* =========================================
+   15. VISIBILITY CONTROL
+========================================= */
 
 .hidden {
   display: none !important;
 }
 
-/* Game HUD */
+/* =========================================
+   16. CAMERA RESPONSIVE LAYOUT
+========================================= */
 
-.game-brand {
-  position: absolute;
-  top: 26px;
-  left: 30px;
-  font-size: 12px;
-  letter-spacing: 4px;
-  color: rgba(255, 255, 255, 0.75);
-}
+@media (max-width: 768px) {
 
-.chapter-label {
-  position: absolute;
-  top: 60px;
-  left: 30px;
-  color: var(--gold-light);
-  font-size: 12px;
-  letter-spacing: 3px;
-}
-
-.hud-top {
-  position: absolute;
-  top: 25px;
-  right: 30px;
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-
-.speed-label {
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-align: right;
-}
-
-.small-button {
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 20px;
-  padding: 8px 18px;
-  background: rgba(17,25,35,0.55);
-  color: white;
-  font-size: 11px;
-  letter-spacing: 1px;
-}
-
-.small-button:hover {
-  border-color: var(--gold);
-}
-
-.crosshair {
-  position: absolute;
-  left: 50%;
-  top: 48%;
-  transform: translate(-50%, -50%);
-  color: rgba(255,255,255,0.3);
-  font-size: 18px;
-  pointer-events: none;
-}
-
-.bottom-hint {
-  position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(255,255,255,0.6);
-  font-size: 10px;
-  letter-spacing: 2px;
-  white-space: nowrap;
-}
-
-.message {
-  position: absolute;
-  top: 105px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--gold-light);
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-align: center;
-  pointer-events: none;
-}
-
-/* Main screens */
-
-.screen {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    linear-gradient(
-      120deg,
-      rgba(9, 16, 25, 0.94),
-      rgba(20, 32, 44, 0.78)
-    );
-  text-align: center;
-}
-
-.screen-content {
-  width: min(650px, 90%);
-  padding: 40px 20px;
-}
-
-.eyebrow {
-  color: var(--gold);
-  font-size: 11px;
-  letter-spacing: 4px;
-  margin-bottom: 30px;
-}
-
-.screen h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(52px, 9vw, 100px);
-  line-height: 0.95;
-  letter-spacing: -3px;
-  margin: 0;
-  color: #f5eee3;
-}
-
-.subtitle {
-  margin: 35px 0;
-  line-height: 1.8;
-  font-size: 16px;
-  color: rgba(245,238,227,0.7);
-}
-
-.primary-button {
-  min-width: 190px;
-  padding: 16px 30px;
-  border: 1px solid var(--gold);
-  border-radius: 4px;
-  background: linear-gradient(135deg, #a96e45, #d49a68);
-  color: #fff8ed;
-  font-weight: 700;
-  letter-spacing: 2px;
-  transition: 0.25s;
-}
-
-.primary-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(230,180,124,0.22);
-}
-
-.control-hint {
-  margin-top: 32px;
-  font-size: 10px;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 2px;
-}
-
-/* Dialogue */
-
-.dialogue-screen {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 30px;
-  background: linear-gradient(
-    transparent 40%,
-    rgba(7,12,19,0.8)
-  );
-}
-
-.dialogue-card {
-  width: min(760px, 95%);
-  padding: 25px 30px;
-  border: 1px solid rgba(230,180,124,0.4);
-  border-radius: 8px;
-  background: var(--panel);
-  backdrop-filter: blur(14px);
-}
-
-.speaker {
-  color: var(--gold);
-  font-size: 11px;
-  letter-spacing: 3px;
-}
-
-.dialogue-card p {
-  margin: 18px 0;
-  font-size: clamp(17px, 2.4vw, 23px);
-  line-height: 1.6;
-}
-
-.text-button {
-  display: block;
-  margin-left: auto;
-  border: none;
-  background: none;
-  color: var(--gold-light);
-  font-size: 12px;
-  letter-spacing: 1px;
-}
-
-/* Chapter transition */
-
-.transition-screen {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-  background: rgba(12,19,28,0.94);
-  text-align: center;
-}
-
-.transition-screen > p:first-child {
-  color: var(--gold);
-  font-size: 11px;
-  letter-spacing: 4px;
-}
-
-.transition-screen h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(35px, 6vw, 65px);
-  margin: 15px 0;
-}
-
-.transition-screen > p:nth-of-type(2) {
-  color: rgba(255,255,255,0.65);
-  margin-bottom: 35px;
-}
-
-/* Ending */
-
-.ending-content h1 {
-  color: var(--gold-light);
-}
-
-@media (max-width: 600px) {
   .game-brand {
-    left: 16px;
-    top: 16px;
+    top: 20px;
+    left: 18px;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
   }
 
   .chapter-label {
-    left: 16px;
-    top: 45px;
+    top: 20px;
+    right: 18px;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
   }
 
   .hud-top {
-    top: 16px;
-    right: 16px;
+    top: 58px;
+
+    left: 18px;
+    right: 18px;
+
+    align-items: flex-start;
+
+    gap: 10px;
   }
 
   .speed-label {
-    max-width: 170px;
-    font-size: 8px;
-    line-height: 1.5;
-  }
+    padding-top: 10px;
 
-  .bottom-hint {
-    font-size: 8px;
+    font-size: 9px;
+
     letter-spacing: 1px;
   }
 
+  .hud-controls {
+    gap: 6px;
+  }
+
+  #camera-status {
+    min-width: auto;
+
+    padding: 8px;
+
+    font-size: 8px;
+
+    letter-spacing: 0.5px;
+  }
+
+  .small-button {
+    min-height: 32px;
+
+    padding: 0 9px;
+
+    font-size: 8px;
+
+    letter-spacing: 0.5px;
+  }
+
+  .screen {
+    padding: 20px;
+  }
+
+  .screen h1 {
+    font-size: clamp(40px, 12vw, 65px);
+  }
+
+  .subtitle {
+    font-size: 12px;
+  }
+
   .dialogue-screen {
-    padding: 12px;
+    padding: 18px;
   }
 
   .dialogue-card {
-    padding: 20px;
+    padding: 22px;
   }
+
+  #dialogue-text {
+    font-size: 14px;
+  }
+
+  .bottom-hint {
+    bottom: 18px;
+
+    font-size: 8px;
+
+    letter-spacing: 0.8px;
+  }
+
+}
+
+/* =========================================
+   17. SMALL MOBILE SCREENS
+========================================= */
+
+@media (max-width: 480px) {
+
+  .hud-top {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .hud-controls {
+    width: 100%;
+
+    justify-content: flex-end;
+  }
+
+  #camera-status {
+    margin-right: auto;
+  }
+
+  .primary-button {
+    min-width: 170px;
+
+    min-height: 44px;
+
+    font-size: 10px;
+  }
+
+  .control-hint {
+    font-size: 9px;
+  }
+
+}
+
+/* =========================================
+   18. LANDSCAPE MOBILE
+========================================= */
+
+@media (
+  max-height: 500px
+) and (
+  orientation: landscape
+) {
+
+  .screen {
+    padding: 12px;
+  }
+
+  .screen h1 {
+    margin-bottom: 12px;
+
+    font-size: 42px;
+  }
+
+  .eyebrow {
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    margin-bottom: 14px;
+
+    font-size: 11px;
+  }
+
+  .control-hint {
+    margin-top: 12px;
+  }
+
+  .dialogue-card {
+    padding: 15px 22px;
+  }
+
+  .dialogue-screen {
+    padding: 15px;
+  }
+
+}
+
+/* =========================================
+   19. ACCESSIBILITY
+========================================= */
+
+@media (
+  prefers-reduced-motion: reduce
+) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+
+    transition-duration: 0.01ms !important;
+
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+  }
+
 }

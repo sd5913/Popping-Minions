@@ -6,9 +6,13 @@
 
 ## Play the Game
 
-<https://popping-minions.pages.dev/>
+### Official Public Demo
 
-This is the team's official production deployment on Cloudflare Pages. Open the link above to play the current published build.
+**[Play Missed This Stop](https://popping-minions.pages.dev/)**
+
+The official public build is hosted on **Cloudflare Pages**. Open the link above in a modern browser to play. The game is served over HTTPS, so camera permission can be requested by the browser.
+
+If you do not want to use a camera, keyboard and pointer/swipe controls remain available.
 
 ## About the Game
 
@@ -22,7 +26,7 @@ The protagonist rushes towards an exam, but the journey takes them through a ser
 
 ## Current Game Experience
 
-The current game prototype is organized as a continuous journey across six narrative sections:
+The game is organized as a continuous journey across six narrative sections:
 
 1. **Prologue — Can't Be Late**
 2. **Chapter 1 — Standard Answer Avenue**
@@ -35,28 +39,48 @@ The current codebase includes:
 
 - First-person Canvas 2D game rendering.
 - Three-lane movement and animated lane transitions.
-- Jumping and obstacle collision detection.
-- Mistake feedback and recovery that allow the run to continue rather than restarting.
+- Jumping, obstacle collision detection, and recovery that allow the run to continue.
 - Chapter-specific environments, movement speeds, and obstacle types.
 - Character dialogue, chapter transitions, pause/resume, and an ending sequence.
-- Keyboard controls and swipe gestures on the game canvas.
+- Keyboard and pointer/swipe input.
+- **MediaPipe hand tracking:** camera preview, hand-position zones for left/right lane movement, and gesture-triggered actions.
+- A debug panel showing hand detection, gesture confidence, hand position, current zone, armed state, FPS, last action, and cooldown information.
 
-The project is still under development. Gesture input currently refers to touch/pointer swipe controls; camera-based hand tracking and facial/body motion capture are not claimed as implemented in this build.
+Camera-based hand input is implemented in the current prototype. Facial-expression and full-body pose tracking are not yet part of the active gameplay controls.
 
 ## Controls
+
+### Keyboard
 
 | Input | Action |
 |---|---|
 | Left Arrow / A | Move left |
 | Right Arrow / D | Move right |
 | Space / Up Arrow | Jump |
-| Swipe left / right on the game canvas | Change lane |
-| Swipe up on the game canvas | Jump |
 | Enter | Interact / continue dialogue or chapter |
 | Escape | Pause / resume |
-| Pause button | Pause / resume |
 
-During dialogue and chapter transition screens, use **Enter** or the on-screen button to continue.
+### Camera and Hand Gestures
+
+1. Click **ENABLE CAMERA** in the game interface.
+2. Allow camera access when the browser asks for permission.
+3. Keep one hand visible in front of the camera.
+4. Move your hand into the left or right control zone to change lanes.
+5. Show an **open palm** to jump.
+6. Make a **closed fist** to interact, advance dialogue, or continue a chapter transition.
+
+The camera preview uses a mirrored selfie view. Hand-control coordinates are handled separately so the player's visual left and right correspond to the intended game directions.
+
+Hand tracking requires a browser with camera support and access to the MediaPipe model/WASM assets. Use the public HTTPS demo or a local `localhost` development server. If camera access is unavailable or denied, use keyboard or pointer controls.
+
+### Pointer / Touch
+
+| Input | Action |
+|---|---|
+| Swipe left / right on the game canvas | Change lane |
+| Swipe up on the game canvas | Jump |
+
+During dialogue and chapter transition screens, use **Enter**, a closed-fist interaction, or the on-screen button to continue.
 
 ## Run Locally
 
@@ -64,8 +88,9 @@ The main Vite application is in the `missed-this-stop/` directory.
 
 ### Requirements
 
-- Node.js with npm
-- A modern desktop browser
+- Node.js and npm
+- A modern browser
+- Camera permission for hand-tracking tests
 
 ### Start the development server
 
@@ -75,9 +100,9 @@ npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite in your browser.
+Open the local URL printed by Vite. Camera access is supported on `localhost`.
 
-### Create a production build
+### Create and preview a production build
 
 ```bash
 cd missed-this-stop
@@ -86,7 +111,21 @@ npm run build
 npm run preview
 ```
 
-Vite outputs the production files to `missed-this-stop/dist/`.
+Vite outputs production files to `missed-this-stop/dist/`.
+
+## Public Deployment
+
+The official public demo is deployed with **Cloudflare Pages**.
+
+| Setting | Value |
+|---|---|
+| Production branch | `main` |
+| Root directory | `missed-this-stop` |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Public URL | [https://popping-minions.pages.dev/](https://popping-minions.pages.dev/) |
+
+When changes are merged into `main`, Cloudflare Pages should build and publish the updated application automatically. Check the Cloudflare Pages deployment status if the public page has not updated yet.
 
 ## Repository Structure
 
@@ -102,7 +141,12 @@ Popping-Minions/
 │   ├── package.json
 │   └── src/
 │       ├── chapters/        # Chapter data and dialogue
-│       ├── controls/        # Keyboard and pointer input
+│       ├── controls/
+│       │   ├── HandController.js
+│       │   ├── InputManager.js
+│       │   ├── InputAdapter.js
+│       │   ├── FaceController.js
+│       │   └── PoseController.js
 │       ├── core/            # Game loop and scene management
 │       ├── rendering/       # First-person Canvas renderer
 │       ├── systems/         # Movement and collision systems
@@ -149,6 +193,8 @@ This project follows an iterative development process with weekly tutor reviews.
 | 5 Nov 2026 | Initial browser prototype and core movement experiments |
 | 12 Nov 2026 | Narrative and gameplay integration work |
 | 17 Nov 2026 | First-person runner prototype merged into `main`; Cloudflare production deployment triggered |
+| 18 Nov 2026 | Phase 2 hand-tracking controls, camera interface, and MediaPipe integration added to the multimodal feature branch |
+| 19 Nov 2026 | Windows production build completed successfully; camera and hand-control integration continues to be tested |
 
 See the [Development Progress Log](docs/PROGRESS.md) for implementation notes, testing evidence, challenges, and next steps.
 
@@ -158,6 +204,8 @@ See the [Development Progress Log](docs/PROGRESS.md) for implementation notes, t
 - JavaScript (ES modules)
 - CSS
 - Vite
+- MediaPipe Tasks Vision
+- Browser camera APIs
 - GitHub and GitHub Actions
 - Cloudflare Pages
 
@@ -166,10 +214,10 @@ AI tools have supported concept exploration, programming assistance, debugging, 
 ## Current Development Priorities
 
 - Continue playtesting the complete chapter flow.
-- Refine obstacle timing, collision feedback, and recovery.
-- Improve narrative pacing and dialogue presentation.
-- Continue visual and audio development.
-- Explore camera-based gesture and motion input as future work.
+- Refine hand-tracking stability, lane movement thresholds, and gesture cooldowns.
+- Test camera behavior across Windows and macOS browsers.
+- Improve narrative pacing, obstacle timing, collision feedback, and dialogue presentation.
+- Develop facial-expression and full-body motion capture as future input capabilities.
 
 ## Submission
 
