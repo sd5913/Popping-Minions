@@ -225,3 +225,7 @@ AI tools have supported concept exploration, programming assistance, debugging, 
 **Repository:** <https://github.com/sd5913/Popping-Minions>  
 **Official game:** <https://popping-minions.pages.dev/>  
 **Final deadline:** 6 December 2026, 23:59 Hong Kong Time.
+
+## Chapter 02 countryside scene assets
+
+The countryside environment has been modeled in Blender through a Codex-to-Blender workflow and UV textured. The editable scene, texture package, rendered previews, and integration notes are available in [Chapter 02 countryside assets](art-assets/chapter-02-countryside/README.md).
