@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#120b0d" />
+    <meta
+      name="description"
+      content="Chapter 03 — After the Fall. A single-chapter first-person narrative runner built from the Clock City long avenue scene."
+    />
+    <title>After the Fall — Chapter 03</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23120b0d'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23efc37c' stroke-width='3'/%3E%3Cpath d='M32 32V18M32 32l10 7' stroke='%23efc37c' stroke-width='3'/%3E%3C/svg%3E"
+    />
+    <link rel="preload" as="image" href="/images/chapter3-title.jpg" />
+    <!-- MediaPipe Hands runs as a classic <script> so it exposes window.Hands reliably, -->
+    <!-- regardless of how Vite resolves the @mediapipe/hands CommonJS bundle. -->
+    <script src="/mediapipe/hands.js" defer></script>
+    <script type="module" crossorigin src="/assets/index-BX-1PhEY.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BgfFRPGu.css">
+  </head>
+  <body>
+    <main id="app">
+      <canvas id="scene"></canvas>
+
+      <div class="grade" aria-hidden="true"></div>
+      <div class="vignette" aria-hidden="true"></div>
+
+      <video id="camera-feed" class="camera-feed hidden" playsinline muted autoplay></video>
+      <div id="hand-status" class="hand-status hidden">
+        <span id="hand-status-dot" class="hand-status-dot"></span>
+        <span id="hand-status-text">Hand: off</span>
+      </div>
+
+      <!-- ================= HUD ================= -->
+      <header class="hud hud-top">
+        <div class="brand">
+          <span class="brand-mark"></span>
+          <span class="brand-text">MISSED THIS STOP</span>
+        </div>
+
+        <div class="chapter-chip">
+          <span class="chapter-chip-label">CHAPTER</span>
+          <span class="chapter-chip-number">03</span>
+        </div>
+
+        <div class="hud-actions">
+          <button id="hand-button" class="icon-button hand-button" type="button" aria-label="Toggle hand tracking" title="Hand tracking (camera)">
+            <span class="icon-hand">HAND OFF</span>
+          </button>
+          <button id="sound-button" class="icon-button" type="button" aria-label="Toggle sound" title="Sound (M)">
+            <span class="icon-sound">SOUND ON</span>
+          </button>
+          <button id="pause-button" class="icon-button" type="button" aria-label="Pause game" title="Pause (Esc)">
+            PAUSE
+          </button>
+        </div>
+      </header>
+
+      <div class="hud hud-status">
+        <div class="status-block">
+          <span class="status-label">STATE</span>
+          <span id="status-motion" class="status-value">READY</span>
+        </div>
+        <div class="status-block">
+          <span class="status-label">DISTANCE</span>
+          <span id="status-distance" class="status-value">000 M</span>
+        </div>
+        <div class="status-block">
+          <span class="status-label">MISSTEPS</span>
+          <span id="status-mistakes" class="status-value">0</span>
+        </div>
+        <div class="status-block tape-block" id="tape-block">
+          <span class="status-label">REPAIR TAPE</span>
+          <span id="status-tape" class="status-value">—</span>
+        </div>
+      </div>
+
+      <div class="hud hud-progress">
+        <div class="progress-track">
+          <div id="progress-fill" class="progress-fill"></div>
+          <span class="progress-marker marker-gate" style="left: 23%">GATE</span>
+          <span class="progress-marker marker-builder" style="left: 39%">BUILDER</span>
+          <span class="progress-marker marker-broken" style="left: 78%">BROKEN ROAD</span>
+          <span class="progress-marker marker-portal" style="left: 98%">PORTAL</span>
+        </div>
+      </div>
+
+      <div id="message" class="message hidden" role="status" aria-live="polite"></div>
+      <div id="prompt" class="prompt hidden" role="status" aria-live="polite">
+        <span id="prompt-text">HOLD E — REPAIR THE BRIDGE</span>
+        <span class="hold-meter"><span id="hold-fill"></span></span>
+      </div>
+
+      <div class="reticle" aria-hidden="true"><span></span></div>
+
+      <!-- ================= TITLE ================= -->
+      <section id="title-screen" class="screen title-screen">
+        <div class="title-backdrop" aria-hidden="true"></div>
+        <div class="title-inner">
+          <p class="eyebrow">A FIRST-PERSON NARRATIVE RUNNER</p>
+          <p class="chapter-kicker"><span>CHAPTER 03</span><span class="kicker-line"></span><span>AFTER THE MISTAKE</span></p>
+          <h1 class="title">
+            <span>AFTER</span>
+            <span class="title-italic">the fall</span>
+          </h1>
+          <p class="lede">
+            The road breaks. Another way appears below.<br />
+            You do not need to climb back to where you were.
+          </p>
+          <div class="title-actions">
+            <button id="start-button" class="primary-button" type="button" disabled>
+              <span id="start-label">LOADING THE AVENUE…</span>
+              <span class="button-arrow">→</span>
+            </button>
+            <button id="how-button" class="ghost-button" type="button">HOW TO PLAY</button>
+          </div>
+
+          <div id="hand-onboarding" class="hand-onboarding" data-state="idle">
+            <div class="hand-onboarding-head">
+              <span class="hand-onboarding-title">HAND CONTROL</span>
+              <span id="hand-onboarding-state" class="hand-onboarding-state">OFF</span>
+            </div>
+            <p class="hand-onboarding-copy">
+              Turn on the camera and run this chapter with your hands — left / right
+              swipe to change lane, swipe up to jump.
+            </p>
+            <button id="hand-start-button" class="hand-cta" type="button">
+              <span class="hand-cta-icon">✋</span>
+              <span id="hand-start-label">ENABLE CAMERA</span>
+            </button>
+            <ul class="hand-legend">
+              <li><span class="hand-legend-gesture">← →</span><span>Swipe to change lane</span></li>
+              <li><span class="hand-legend-gesture">↑</span><span>Swipe up to jump</span></li>
+              <li><span class="hand-legend-gesture">✊</span><span>Fist to continue dialogue</span></li>
+              <li><span class="hand-legend-gesture">✋</span><span>Hold open palm to repair</span></li>
+            </ul>
+            <p id="hand-onboarding-note" class="hand-onboarding-note">
+              Video is processed locally in your browser. Nothing is recorded or uploaded.
+            </p>
+          </div>
+          <p class="title-credit">
+            Scene rebuilt from <em>ClockCity_Long_Avenue.blend</em> · Chapter 03 only
+          </p>
+        </div>
+        <div class="title-side" aria-hidden="true">
+          <div class="title-side-rule"></div>
+          <p>MISSED THIS STOP</p>
+          <p class="title-side-dim">THE NEXT STOP — 2026</p>
+        </div>
+        <div class="load-bar" id="load-bar"><span id="load-fill"></span></div>
+      </section>
+
+      <!-- ================= HOW TO PLAY ================= -->
+      <section id="how-screen" class="screen panel-screen hidden">
+        <div class="panel-card">
+          <p class="eyebrow">HOW TO PLAY</p>
+          <h2 class="panel-title">Keep moving.<br /><span class="italic">The road will answer.</span></h2>
+          <div class="control-grid">
+            <div class="control-row"><span class="key">← →</span><span>Change lane</span></div>
+            <div class="control-row"><span class="key">SPACE</span><span>Jump</span></div>
+            <div class="control-row"><span class="key">E</span><span>Interact / hold to repair</span></div>
+            <div class="control-row"><span class="key">ESC</span><span>Pause</span></div>
+          </div>
+          <p class="panel-copy">
+            Mistakes never end the run. If you fall, the lower road keeps going.
+            Collect the repair tape from the bridge builder and hold <strong>E</strong> at the broken bridge.
+          </p>
+          <div class="panel-actions">
+            <button id="how-close" class="primary-button" type="button">BACK <span class="button-arrow">→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DIALOGUE ================= -->
+      <section id="dialogue-screen" class="dialogue-screen hidden">
+        <div class="dialogue-card">
+          <div class="dialogue-head">
+            <span id="speaker" class="speaker">BRIDGE BUILDER</span>
+            <span class="dialogue-tag">CLOSE ENCOUNTER</span>
+          </div>
+          <p id="dialogue-text"></p>
+          <div class="dialogue-foot">
+            <span class="dialogue-hint">ENTER / E / TAP TO CONTINUE</span>
+            <button id="dialogue-next" class="text-button" type="button">CONTINUE →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PAUSE ================= -->
+      <section id="pause-screen" class="screen panel-screen hidden">
+        <div class="panel-card narrow">
+          <p class="eyebrow">PAUSED</p>
+          <h2 class="panel-title">Catch your breath.</h2>
+          <p class="panel-copy">The avenue waits. No misstep is permanent.</p>
+          <div class="panel-actions">
+            <button id="resume-button" class="primary-button" type="button">RESUME <span class="button-arrow">→</span></button>
+            <button id="restart-button" class="ghost-button" type="button">RESTART CHAPTER</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= ENDING ================= -->
+      <section id="end-screen" class="screen end-screen hidden">
+        <div class="end-inner">
+          <p class="eyebrow">CHAPTER 03 — COMPLETE</p>
+          <h1 class="end-title">The bridge<br /><span class="italic">holds.</span></h1>
+          <p class="lede">
+            You did not go back. You repaired what was in front of you,<br />
+            and kept walking into the light.
+          </p>
+          <div class="end-stats">
+            <div><span class="stat-label">DISTANCE</span><span id="end-distance" class="stat-value">0 M</span></div>
+            <div><span class="stat-label">MISSTEPS</span><span id="end-mistakes" class="stat-value">0</span></div>
+            <div><span class="stat-label">FALLS</span><span id="end-falls" class="stat-value">0</span></div>
+            <div><span class="stat-label">BRIDGE</span><span id="end-bridge" class="stat-value">REPAIRED</span></div>
+          </div>
+          <div class="panel-actions">
+            <button id="again-button" class="primary-button" type="button">RUN AGAIN <span class="button-arrow">→</span></button>
+          </div>
+          <p class="end-quote">“Maybe you don't need to get back.”</p>
+        </div>
+      </section>
+
+      <!-- ================= MOBILE TOUCH ================= -->
+      <div id="touch-controls" class="touch-controls hidden">
+        <button id="touch-left" class="touch-button" type="button" aria-label="Move left">←</button>
+        <button id="touch-jump" class="touch-button touch-jump" type="button" aria-label="Jump">JUMP</button>
+        <button id="touch-right" class="touch-button" type="button" aria-label="Move right">→</button>
+      </div>
+
+      <div id="fall-overlay" class="fall-overlay hidden">
+        <div class="fall-inner">
+          <p class="fall-eyebrow">YOU FELL</p>
+          <p class="fall-copy">The road below keeps going.</p>
+        </div>
+      </div>
+
+      <div id="flash" class="flash" aria-hidden="true"></div>
+
+      <div id="rotate-hint" class="rotate-hint hidden">
+        <p>Turn your device sideways for the full avenue.</p>
+      </div>
+
+      <div id="fatal" class="fatal hidden">
+        <p class="eyebrow">WEBGL UNAVAILABLE</p>
+        <h2>This browser cannot render the avenue.</h2>
+        <p>Please open the demo in a current version of Chrome, Edge, Firefox or Safari.</p>
+      </div>
+    </main>
+
+  </body>
+</html>

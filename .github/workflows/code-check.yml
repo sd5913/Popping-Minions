@@ -27,6 +27,8 @@ jobs:
       - name: Check required files
         run: |
           test -f games/prototypes/early-canvas/index.html
+          test -f games/demos/chapter-03-after-the-fall/index.html
+          test -f games/demos/chapter-03-after-the-fall/models/clock-city.glb
           test -f README.md
           test -f docs/GAME_CONCEPT.md
           test -f docs/PROGRESS.md
