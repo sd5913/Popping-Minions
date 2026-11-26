@@ -265,3 +265,31 @@ Further development will focus on improving the interaction quality and integrat
 The countryside scene contributor completed the current Blender modeling and UV-texturing iteration using Codex connected to Blender. This sync adds the editable scene, supplied texture archive, and two rendered views to [the scene asset folder](../art-assets/chapter-02-countryside/README.md).
 
 Completed work includes the countryside environment layout and textured visual treatment shown in the previews. Archive integrity was checked during the upload preparation. Opening the scene in Blender, checking texture links on another machine, runtime export, collision setup, and browser gameplay integration remain to be verified or implemented.
+
+## 26 November 2026 · Week 12 Delivery Candidate
+
+**Status:** Planned checks. No playtest results are claimed in this entry.
+
+**Candidate:** [TRAE four-chapter preview](https://37lray4smy34bm6szcf.traesite.cn/). The [Cloudflare build](https://popping-minions.pages.dev/) remains the repository's documented public build. Record which URL is tested; the two links are not assumed to serve the same revision.
+
+### Playtest and release checks
+
+- [ ] Record the candidate URL, source commit or deployment ID, tester's device, OS and browser. If the ID is not available, record a timestamp and mark the ID pending.
+- [ ] Compare one finding from the 19 November playtest with the current behavior. If the earlier observation is unavailable, mark it missing rather than reconstructing a result.
+- [ ] Give another group the link and README only. Observe whether they find Start and perform one ordinary action, such as changing lanes. Then test one recovery path, such as continuing with keyboard controls after denying camera access, if supported by the chosen build.
+- [ ] Record expected and actual results. Fix one blocker, publish the new candidate and repeat the same test.
+- [ ] Separately check the chapter transitions and ending in the final candidate. Record broken or untested routes explicitly.
+- [ ] Show the usable build, playtest evidence and main blocker to the tutor. Record feedback, next action and owner here or in the linked team board.
+
+| Build URL and revision | Device and browser | Action | Expected | Actual | Fix and owner | Retest |
+| --- | --- | --- | --- | --- | --- | --- |
+| Pending | Pending | Lane switch and recovery | Pending | Not yet tested | Pending | Pending |
+
+### Final handoff
+
+- [ ] Identify the exact source for the chosen preview, integrate it in a feature branch, and preserve the existing working build until the replacement passes its checks.
+- [ ] Update the README to identify the matching release link, local setup, supported inputs, known limitations and team progress record. Review asset sources and AI credits in `CREDITS.md`.
+- [ ] 3 December: Bring the working increment, test evidence and main blocker to the final review. The quiz begins at 10:30 HKT in TU103.
+- [ ] Before 6 December, 23:59 HKT: verify the public `sd5913` repository, teammate write access, links and Canvas Website URL submission. Submit the repository URL via Canvas as instructed.
+
+Course references: [Week 12 tutorial](https://github.com/sd5913/pfad/blob/2026/week12/README.md) and [group-project brief](https://github.com/sd5913/pfad/blob/2026/assignments/group-project.md).
