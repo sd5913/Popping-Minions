@@ -23,7 +23,7 @@ Install Git and Node.js 22.12 or later in the Node 22 series. Node includes npm.
 
 ```bash
 git clone https://github.com/sd5913/Popping-Minions.git
-cd Popping-Minions/open-wild-four-chapters-20261125
+cd Popping-Minions/games/open-wild
 npm ci
 npm run dev
 ```
@@ -34,9 +34,8 @@ Open the localhost URL printed by Vite. For the Cloudflare hand-tracking build, 
 
 | Location | Contents |
 | --- | --- |
-| [Open Wild source](open-wild-four-chapters-20261125/) | Three.js runner, four chapter modules and browser-ready GLB assets. See the [architecture notes](open-wild-four-chapters-20261125/src/ARCHITECTURE.md). |
+| [Games and prototypes](games/) | [Open Wild](games/open-wild/) includes the Three.js runner, four chapter modules and browser-ready GLBs. See its [architecture notes](games/open-wild/src/ARCHITECTURE.md). The [original HTML prototype](games/prototypes/early-canvas/) is kept here for reference. |
 | [Missed This Stop source](missed-this-stop/) | Canvas 2D runner and MediaPipe hand controls. |
-| [Original HTML prototype](index.html) | Early single-file Canvas experiment. |
 | [Art assets](art-assets/) | Editable Blender sources and reference images for Chapters [01](art-assets/chapter-01-standard-answer-avenue/), [02](art-assets/chapter-02-countryside/) and [04](art-assets/chapter-04-ink-landscape/). The large Chapter 04 source downloads from [GitHub Releases](https://github.com/sd5913/Popping-Minions/releases/tag/chapter-04-scene-source). |
 | [Design and progress](docs/) | [Game concept](docs/GAME_CONCEPT.md), [level design](docs/LEVEL_DESIGN.md), [development log](docs/PROGRESS.md) and [credits](docs/CREDITS.md). |
 | [Scrum records](scrum/) | [Roles and contributions](scrum/roles.md), [Product Backlog](scrum/product-backlog.md), sprint records and weekly sync notes. |

@@ -3,7 +3,9 @@
 | Build | Source | Automation | URL |
 | --- | --- | --- | --- |
 | Missed This Stop | `missed-this-stop/` | Cloudflare Pages Git integration builds from `main` with `npm run build` and publishes `dist`. It also posts per-branch preview URLs on GitHub. | [Cloudflare production](https://popping-minions.pages.dev/) |
-| The Open Wild | `open-wild-four-chapters-20261125/` | The [GitHub Pages workflow](../.github/workflows/open-wild-pages.yml) builds with Node 22 and runs after relevant changes reach `main` or on manual dispatch. | [GitHub Pages production](https://sd5913.github.io/Popping-Minions/) |
+| The Open Wild | `games/open-wild/` | The [GitHub Pages workflow](../.github/workflows/open-wild-pages.yml) builds with Node 22 and runs after relevant changes reach `main` or on manual dispatch. | [GitHub Pages production](https://sd5913.github.io/Popping-Minions/) |
+
+Cloudflare Pages is configured to use `missed-this-stop/` as its root directory. A future move of that folder must be coordinated with the Cloudflare project settings.
 
 For a PR preview of **Missed This Stop**, open the **Cloudflare Pages** check and follow its **Preview URL**. For **Open Wild**, use the PR's build artifact or run the PR branch locally. [Cloudflare Git integration reference](https://developers.cloudflare.com/pages/configuration/git-integration/).
 
