@@ -11,11 +11,15 @@ SD5913 Creative Programming · Group Project 2026
 | **The Open Wild** | **[Play the four-chapter 3D build](https://sd5913.github.io/Popping-Minions/)** | Start from the chapter directory, try the four environments and replay chapters independently. |
 | **Missed This Stop** | [Play the Cloudflare hand-tracking build](https://popping-minions.pages.dev/) | Try the 2D narrative runner with keyboard, pointer or optional webcam gestures. |
 
+**Version note:** The GitHub Pages build contains Chapters 01–04 and has no webcam controls. The separate [TRAE preview](https://37lray4smy34bm6szcf.traesite.cn/) also shows a prologue, an epilogue and an **Enable Camera** option in the prologue. Its matching source revision and gameplay have not been verified in this repository. The Cloudflare build is the separate, earlier hand-tracking runner.
+
 **Open Wild controls:** A/D or arrow keys to change lanes, Space to jump, S to duck and Esc to pause. Follow the on-screen prompts for chapter-specific actions.
 
 **Missed This Stop controls:** A/D or arrow keys to change lanes, Space or Up to jump, Enter to interact and Esc to pause. To use gestures, select **Enable camera** and grant browser permission. Hand position changes lanes, an open palm jumps and a closed fist interacts.
 
 The team still needs to confirm which link to list as the final submission build. The course deadline is **6 December 2026, 23:59 Hong Kong time**. Follow the Canvas instructions and submit the team repository URL. [Course brief](https://github.com/sd5913/pfad/blob/2026/assignments/group-project.md).
+
+For deployment evidence and outstanding checks, see the [Week 12 playtest record](docs/PROGRESS.md#26-november-2026--week-12-delivery-candidate).
 
 ## Run locally
 

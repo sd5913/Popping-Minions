@@ -265,3 +265,30 @@ Further development will focus on improving the interaction quality and integrat
 The countryside scene contributor completed the current Blender modeling and UV-texturing iteration using Codex connected to Blender. This sync adds the editable scene, supplied texture archive, and two rendered views to [the scene asset folder](../art-assets/chapter-02-countryside/README.md).
 
 Completed work includes the countryside environment layout and textured visual treatment shown in the previews. Archive integrity was checked during the upload preparation. Opening the scene in Blender, checking texture links on another machine, runtime export, collision setup, and browser gameplay integration remain to be verified or implemented.
+
+## 26 November 2026 · Week 12 Delivery Candidate
+
+### Deployment and version comparison
+
+| Build | Confirmed | Still to verify |
+| --- | --- | --- |
+| [Open Wild on GitHub Pages](https://sd5913.github.io/Popping-Minions/) | [Successful deploy](https://github.com/sd5913/Popping-Minions/actions/runs/45786214436) from `1dbeb88`; source and runtime assets in [`games/open-wild/`](../games/open-wild/). The public directory lists Chapters 01–04. | Full chapter flow on a WebGL-capable device, keyboard/touch and one recovery or transition. |
+| [Open Wild on TRAE](https://37lray4smy34bm6szcf.traesite.cn/) | The public directory lists a prologue, four chapters and an epilogue. The prologue shows an **Enable Camera** option. | Matching source revision; the chapter flow, camera calibration and gesture actions were not verified. |
+| [Missed This Stop on Cloudflare](https://popping-minions.pages.dev/) | The separate Canvas runner has MediaPipe input documented in the repository README. | Real-camera and keyboard fallback retest if used in the review. |
+
+### Initial browser check
+
+| Build | Device | Action | Expected | Observed | Next check |
+| --- | --- | --- | --- | --- | --- |
+| Open Wild GitHub Pages | Cloud Chrome | Open the directory and select Chapter 01 | Chapter intro loads and Start becomes available | Directory and intro rendered, but Start was disabled. The console reported failure to create a WebGL context, with GL vendor/renderer disabled in this browser. | Retest in a WebGL-capable desktop browser before judging gameplay. |
+| Open Wild TRAE | Cloud Chrome | Open the directory and select the prologue | Prologue can start and offers the camera toggle | Prologue and toggle were present. Scene initialization was blocked by the same WebGL-context error; camera permission was not requested. | Retest on desktop with a camera, including an uncoached calibration or keyboard fallback check. |
+
+### Before the final handoff
+
+- [ ] Agree which build is the final candidate. If it is the TRAE narrative and hand-control version, obtain its exact source revision and add only the missing code and runtime resources on a branch. Do not re-import the four-chapter baseline.
+- [ ] Give another group the chosen public URL and README. Observe one ordinary action and one recovery or transition. Record build revision, device/browser, expected/observed result, one change with an owner, and the result of the retest. Compare with an actual 19 November observation if available.
+- [ ] For Open Wild, verify that each chapter can start and end, and that chapter transitions work. For a hand-control candidate, test camera permission allowed/denied, the calibration flow, and keyboard fallback on the same revision.
+- [ ] 3 December: bring the usable version, evidence and main blocker to the final review. The quiz starts at 10:30 HKT in TU103.
+- [ ] Before 6 December, 23:59 HKT: confirm that the source, approved demo link, limitations and contribution/AI credits agree. Confirm assessor access, team Write permissions, and submit the public team repository URL in Canvas.
+
+Course references: [Week 12 tutorial](https://github.com/sd5913/pfad/blob/2026/week12/README.md) and [group-project brief](https://github.com/sd5913/pfad/blob/2026/assignments/group-project.md).
