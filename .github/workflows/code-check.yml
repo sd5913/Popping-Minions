@@ -52,3 +52,23 @@ jobs:
 
           console.log('JavaScript syntax check passed.');
           NODE
+
+      - name: Build Missed This Stop
+        working-directory: missed-this-stop
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build The Open Wild
+        working-directory: open-wild-four-chapters-20261125
+        run: |
+          npm ci
+          npm run build -- --base ./
+
+      - name: Upload Open Wild review build
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: open-wild-pr-build
+          path: open-wild-four-chapters-20261125/dist
+          if-no-files-found: error
