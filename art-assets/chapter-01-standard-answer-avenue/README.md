@@ -26,7 +26,7 @@
 
 | 文件 | 内容 |
 | --- | --- |
-| [exam_landscape_final.blend](exam_landscape_final.blend) | 可编辑的 Blender 总场景 |
+| [exam_landscape_final.blend](source/exam_landscape_final.blend) | 可编辑的 Blender 总场景 |
 | [initial-concept.png](renders/initial-concept.png) | 初始生成的效果图 |
 | [before-lighting.png](renders/before-lighting.png) | 打光前的模型预览 |
 | [standard-answer-avenue.png](renders/standard-answer-avenue.png) | 最终相机渲染，1440 × 810 |

@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "open-wild-four-chapters-20261125/**"
+      - "games/open-wild/**"
       - ".github/workflows/open-wild-pages.yml"
   workflow_dispatch:
 
@@ -30,12 +30,12 @@ jobs:
           node-version: "22"
       - uses: actions/configure-pages@v5
       - name: Build Open Wild
-        working-directory: open-wild-four-chapters-20261125
+        working-directory: games/open-wild
         run: |
           npm ci
           npm run build -- --base ./
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: open-wild-four-chapters-20261125/dist
+          path: games/open-wild/dist
       - uses: actions/deploy-pages@v4
         id: deployment

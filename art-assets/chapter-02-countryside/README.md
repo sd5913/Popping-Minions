@@ -10,10 +10,10 @@ The previews show the main path and wooden bridge, foreground cottage and bicycl
 
 | File | Purpose |
 | --- | --- |
-| country_lane_uv.blend | Editable Blender scene |
-| country_lane_uv_textures.zip | Supplied texture package |
-| renders/country-lane-front.jpg | View along the main path |
-| renders/country-lane-overview.jpg | Elevated overview of the scene layout |
+| [country_lane_uv.blend](source/country_lane_uv.blend) | Editable Blender scene |
+| [country_lane_uv_textures.zip](source/country_lane_uv_textures.zip) | Supplied texture package |
+| [country-lane-front.jpg](renders/country-lane-front.jpg) | View along the main path |
+| [country-lane-overview.jpg](renders/country-lane-overview.jpg) | Elevated overview of the scene layout |
 
 ![View along the main path](renders/country-lane-front.jpg)
 
