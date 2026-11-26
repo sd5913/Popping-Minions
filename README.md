@@ -10,6 +10,7 @@ SD5913 Creative Programming · Group Project 2026
 | --- | --- | --- |
 | **The Open Wild** | **[Play the four-chapter 3D build](https://sd5913.github.io/Popping-Minions/)** | Start from the chapter directory, try the four environments and replay chapters independently. |
 | **Missed This Stop** | [Play the Cloudflare hand-tracking build](https://popping-minions.pages.dev/) | Try the 2D narrative runner with keyboard, pointer or optional webcam gestures. |
+| **Chapter 03 — After the Fall** | [Play the Clock City scene preview](https://37lon8zeql9dzaanakv.traesite.cn/) | Standalone Chapter 03 build with the Clock City / Long Avenue scene. |
 
 **Open Wild controls:** A/D or arrow keys to change lanes, Space to jump, S to duck and Esc to pause. Follow the on-screen prompts for chapter-specific actions.
 
@@ -35,6 +36,7 @@ Open the localhost URL printed by Vite. For the Cloudflare hand-tracking build, 
 | Location | Contents |
 | --- | --- |
 | [Games and prototypes](games/) | [Open Wild](games/open-wild/) includes the Three.js runner, four chapter modules and browser-ready GLBs. See its [architecture notes](games/open-wild/src/ARCHITECTURE.md). The [original HTML prototype](games/prototypes/early-canvas/) is kept here for reference. |
+| [Chapter 03 build snapshot](games/demos/chapter-03-after-the-fall/) | Standalone static build files for the Clock City scene; the live preview is hosted on Trae. |
 | [Missed This Stop source](missed-this-stop/) | Canvas 2D runner and MediaPipe hand controls. |
 | [Art assets](art-assets/) | Editable Blender sources and reference images for Chapters [01](art-assets/chapter-01-standard-answer-avenue/), [02](art-assets/chapter-02-countryside/) and [04](art-assets/chapter-04-ink-landscape/). The large Chapter 04 source downloads from [GitHub Releases](https://github.com/sd5913/Popping-Minions/releases/tag/chapter-04-scene-source). |
 | [Design and progress](docs/) | [Game concept](docs/GAME_CONCEPT.md), [level design](docs/LEVEL_DESIGN.md), [development log](docs/PROGRESS.md) and [credits](docs/CREDITS.md). |
