@@ -1,0 +1,40 @@
+name: Phase 1 MVP checks
+
+on:
+  push:
+    paths:
+      - "phase1/**"
+      - ".github/workflows/phase1-mvp.yml"
+  pull_request:
+    paths:
+      - "phase1/**"
+      - ".github/workflows/phase1-mvp.yml"
+
+jobs:
+  gameplay-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out project
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: JavaScript syntax
+        run: |
+          node --check phase1/game.js
+          node --check phase1/test-mvp.cjs
+      - name: Gameplay smoke test
+        run: node phase1/test-mvp.cjs
+      - name: Prepare standalone playtest folder
+        run: |
+          mkdir -p dist/the-next-stop-chapter1
+          cp phase1/index.html phase1/style.css phase1/game.js phase1/README.md phase1/QA_CHECKLIST.md dist/the-next-stop-chapter1/
+      - name: Upload downloadable playtest
+        uses: actions/upload-artifact@v4
+        with:
+          name: the-next-stop-chapter1-playtest
+          path: dist/the-next-stop-chapter1/
+          if-no-files-found: error
+          retention-days: 14
+
