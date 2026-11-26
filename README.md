@@ -2,7 +2,7 @@
 
 SD5913 Creative Programming · Group Project 2026
 
-*The Next Stop* is a first-person narrative runner about a student who misses an important exam. Players change lanes, jump over obstacles and discover how a setback can open a different route.
+*The Next Stop* is a first-person narrative runner about a student who misses an important exam. Players change lanes, jump over obstacles and discover how a setback can open a different route. It is designed for students and young adults navigating academic pressure and uncertainty.
 
 ## Play the game
 
@@ -15,7 +15,7 @@ SD5913 Creative Programming · Group Project 2026
 
 **Missed This Stop controls:** A/D or arrow keys to change lanes, Space or Up to jump, Enter to interact and Esc to pause. To use gestures, select **Enable camera** and grant browser permission. Hand position changes lanes, an open palm jumps and a closed fist interacts.
 
-The team still needs to confirm which link to list as the final submission build.
+The team still needs to confirm which link to list as the final submission build. The course deadline is **6 December 2026, 23:59 Hong Kong time**. Follow the Canvas instructions and submit the team repository URL. [Course brief](https://github.com/sd5913/pfad/blob/2026/assignments/group-project.md).
 
 ## Run locally
 

@@ -7,7 +7,7 @@
 
 For a PR preview of **Missed This Stop**, open the **Cloudflare Pages** check and follow its **Preview URL**. For **Open Wild**, use the PR's build artifact or run the PR branch locally. [Cloudflare Git integration reference](https://developers.cloudflare.com/pages/configuration/git-integration/).
 
-[Game Code Check](../.github/workflows/code-check.yml) runs on PRs to `main` and again after merge. It checks the original HTML prototype and builds both Vite applications from their lockfiles. The Open Wild artifact can be extracted and served with a local HTTP server.
+[Game Code Check](../.github/workflows/code-check.yml) runs on PRs to `main` and again after merge. It checks the original HTML prototype and builds both Vite applications from their lockfiles. To play the Open Wild PR artifact, open the PR’s **Check Game Code** run and download **open-wild-pr-build** under **Artifacts**. Extract it, run `python3 -m http.server 8000` in the extracted directory and open `http://localhost:8000/`.
 
 ## Credentials
 
