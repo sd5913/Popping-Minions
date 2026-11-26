@@ -14,6 +14,14 @@ The official public build is hosted on **Cloudflare Pages**. Open the link above
 
 If you do not want to use a camera, keyboard and pointer/swipe controls remain available.
 
+### Week 12 Preview: Chapters 1–4
+
+**[Open the TRAE preview](https://37lray4smy34bm6szcf.traesite.cn/)**
+
+This is the team's four-chapter playtest candidate, separate from the Cloudflare Pages link above. The matching TRAE source and deployment revision are not yet verified in this repository. The controls and local setup below describe the repository build; do not assume every control behaves the same in the TRAE preview.
+
+See the [Week 12 playtest record and handoff checklist](docs/PROGRESS.md#26-november-2026--week-12-delivery-candidate) for the tested version, known limitations and next changes.
+
 ## About the Game
 
 **The Next Stop** (playable title: **Missed This Stop**) is a first-person narrative running game about a young person who believes that missing an important examination means losing their future.
