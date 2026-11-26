@@ -14,6 +14,10 @@ The official public build is hosted on **Cloudflare Pages**. Open the link above
 
 If you do not want to use a camera, keyboard and pointer/swipe controls remain available.
 
+### Open Wild Four-Chapter Demo
+
+**[Play Open Wild (Four Chapters)](https://sd5913.github.io/Popping-Minions/)**
+
 ## About the Game
 
 **The Next Stop** (playable title: **Missed This Stop**) is a first-person narrative running game about a young person who believes that missing an important examination means losing their future.

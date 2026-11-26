@@ -17,7 +17,7 @@ export default {
   dialogue: DIALOGUE,
   progressToDistance,
   scene: {
-    model: "/models/chapter4.glb",
+    model: `${import.meta.env.BASE_URL}models/chapter4.glb`,
     transform: null,
     beforeMount(runner, scene, model) {
       // The source blend keeps its river surface at y ≈ -3.46. Lift the whole

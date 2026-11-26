@@ -13,7 +13,7 @@ export default {
   dialogue: DIALOGUE,
   progressToDistance,
   scene: {
-    model: "/models/chapter2.glb",
+    model: `${import.meta.env.BASE_URL}models/chapter2.glb`,
     // Blender's glTF exporter already converts Z-up to Three.js Y-up.
     transform: null,
     beforeMount(runner, scene, model) {

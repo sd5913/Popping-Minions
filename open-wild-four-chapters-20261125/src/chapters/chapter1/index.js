@@ -23,7 +23,7 @@ export default {
 
   // ---- scene hooks -----------------------------------------------------
   scene: {
-    model: "/models/chapter1.glb",
+    model: `${import.meta.env.BASE_URL}models/chapter1.glb`,
     transform: (x, y, z) => [x, z, -y], // Blender → Three
   },
 

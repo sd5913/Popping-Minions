@@ -17,7 +17,7 @@ export default {
   dialogue: DIALOGUE,
   progressToDistance,
   scene: {
-    model: "/models/chapter3.glb",
+    model: `${import.meta.env.BASE_URL}models/chapter3.glb`,
     transform: null,
     beforeMount(runner, scene, model) {
       scene.background = new THREE.Color(0x8e3f2c);
@@ -30,7 +30,7 @@ export default {
       runner.camera.updateProjectionMatrix();
       if (runner.bloom) runner.bloom.strength = runner.reducedMotion ? 0.1 : 0.18;
 
-      new THREE.TextureLoader().load("/images/chapter3-sky.jpg", (texture) => {
+      new THREE.TextureLoader().load(`${import.meta.env.BASE_URL}images/chapter3-sky.jpg`, (texture) => {
         texture.colorSpace = THREE.SRGBColorSpace;
         scene.background = texture;
       });
