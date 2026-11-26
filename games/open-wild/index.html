@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#e8ddc7" />
+    <meta
+      name="description"
+      content="Chapter 01 of Next Stop: The Open Wild — a first-person parkour study along the Standard Answer Avenue."
+    />
+    <title>Standard Answer Avenue · Chapter 01</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232b3c36'/%3E%3Cpath d='M18 14h23l7 8v28H18z' fill='%23f4ecdc'/%3E%3Cpath d='M25 27h16M25 35h16M25 43h10' stroke='%23dc7156' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body data-state="loading">
+    <canvas id="game-canvas" aria-label="First-person Chapter 01 avenue"></canvas>
+    <div id="collision-flash" aria-hidden="true"></div>
+    <div id="lower-veil" aria-hidden="true"></div>
+
+    <main id="hub-screen" class="screen hub-screen" hidden>
+      <section class="hub-intro" aria-labelledby="hub-title">
+        <p class="eyebrow">A four-part first-person journey</p>
+        <h1 id="hub-title">Next stop:<br /><em>the open wild</em></h1>
+        <p class="hub-description">Leave the standard answer. Cross the open field, repair what lies ahead, and follow the river toward a road of your own.</p>
+        <div class="journey-progress" aria-label="Journey completion">
+          <div><span>Your journey</span><b id="journey-progress-label">0 / 4 chapters complete</b></div>
+          <span class="journey-progress-track"><i id="journey-progress-fill"></i></span>
+        </div>
+        <p class="hub-note">Progress is saved on this device. Every chapter can also be played on its own.</p>
+      </section>
+      <nav id="chapter-list" class="chapter-list" aria-label="Chapter directory"></nav>
+      <footer class="hub-footer"><span>Four roads. One continuing story.</span><span>A / D · Space · S · E</span></footer>
+    </main>
+
+    <header id="hud" class="hud" hidden>
+      <div class="chapter-mark">
+        <span class="eyebrow">Chapter 01</span>
+        <strong>Standard Answer Avenue</strong>
+        <div class="inventory" aria-label="Inventory">
+          <span id="inv-memory" class="inv is-empty"><i>M</i><b id="mem-count">0</b></span>
+          <span id="inv-token" class="inv is-empty"><i>T</i><b id="token-count">0</b></span>
+          <span id="inv-tape" class="inv is-empty"><i>R</i><b id="tape-count">0</b></span>
+        </div>
+      </div>
+      <div class="progress-cluster">
+        <div class="progress-meta"><span id="progress-label">0%</span><span id="time-label">00:00.0</span></div>
+        <div class="progress-track"><i id="progress-fill"></i></div>
+        <span id="lane-label">Standard Lane · 1.00×</span>
+        <span id="motion-label">Mile 0 · running</span>
+      </div>
+      <div class="hud-actions">
+        <button id="mute-button" class="icon-button" aria-label="Mute" title="Mute / M">
+          <svg class="sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5zm12 0a5 5 0 010 6m2-9a9 9 0 010 12"/></svg>
+          <svg class="sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5zm12 1l5 5m0-5l-5 5"/></svg>
+        </button>
+        <button id="pause-button" class="icon-button" aria-label="Pause" title="Pause / Esc">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6v12M16 6v12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="play-footer" class="play-footer" hidden>
+      <div class="control-hint">
+        <span><kbd>A</kbd><kbd>D</kbd> lane</span><span><kbd>Space</kbd> jump</span><span><kbd>S</kbd> duck</span>
+      </div>
+      <div class="run-status"><span id="hit-label">Stumbles 0 / 3</span><i></i><span id="route-label">Standard</span></div>
+    </div>
+
+    <div id="subtitle" class="subtitle" role="status" aria-live="polite" hidden>
+      <p id="subtitle-text"></p>
+    </div>
+
+    <div id="dialogue" class="dialogue" role="status" aria-live="polite" hidden>
+      <span id="dialogue-speaker">Stranger</span>
+      <p id="dialogue-text"></p>
+      <small>E / Enter / tap · next · run paused</small>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite">
+      <span id="toast-dot"></span>
+      <div><strong id="toast-title"></strong><p id="toast-copy"></p></div>
+    </div>
+
+    <div id="touch-controls" class="touch-controls" hidden>
+      <div><button id="left-button" aria-label="Lane left">←</button><button id="right-button" aria-label="Lane right">→</button></div>
+      <div>
+        <button id="duck-button" aria-label="Duck">↓</button>
+        <button id="jump-button" class="jump-button" aria-label="Jump">↑</button>
+      </div>
+    </div>
+
+    <main id="intro-screen" class="screen intro-screen">
+      <section class="intro-copy">
+        <div class="chapter-number" aria-hidden="true">01</div>
+        <p class="eyebrow">Chapter 01 · First-person study</p>
+        <h1>Standard Answer<br /><em>Avenue</em></h1>
+        <p class="english-title">NEXT STOP: THE OPEN WILD</p>
+        <p class="intro-description">
+          A giant answer sheet runs through a city of rulers and pencil towers. Everyone is heading for the middle.
+          Run the grid — or find out where it actually leads.
+        </p>
+        <div class="run-facts"><span>≈ 35 seconds</span><span>3 lanes · 3 speeds</span><span>3 stumbles → a quieter road</span></div>
+        <div class="loading-row"><span id="loading-label">Unfolding the avenue</span><span id="loading-percent">0%</span></div>
+        <div class="loading-track"><i id="loading-fill"></i></div>
+        <button id="start-button" class="primary-button" disabled><span>Preparing the avenue</span><b>→</b></button>
+        <p class="keyboard-note">A / D or ← / → change lane · Space jump · S duck · Esc pause</p>
+        <button class="text-button journey-hub-link" data-journey-hub type="button">← Journey directory</button>
+      </section>
+      <aside class="route-key" aria-label="Route key">
+        <p class="eyebrow">Route key</p>
+        <span><i style="--key-color:#7fa89c"></i><b>Scenic · 0.90×</b><em>Journey Memory</em></span>
+        <span><i style="--key-color:#d9b064"></i><b>Standard · 1.00×</b><em>Direct line</em></span>
+        <span><i style="--key-color:#d97856"></i><b>Shortcut · 1.10×</b><em>Protection Token</em></span>
+      </aside>
+    </main>
+
+    <section id="pause-screen" class="screen compact-screen" hidden>
+      <div class="modal-card">
+        <p class="eyebrow">Take a breath</p>
+        <h2>Paused on<br /><em>this page</em></h2>
+        <p>The clock and the avenue are both stopped.</p>
+        <button id="resume-button" class="primary-button"><span>Keep running</span><b>→</b></button>
+        <button id="restart-from-pause" class="text-button">Restart chapter <kbd>R</kbd></button>
+        <button class="text-button" data-journey-hub type="button">Journey directory</button>
+      </div>
+    </section>
+
+    <section id="recovery-screen" class="screen compact-screen recovery-screen" hidden>
+      <div class="modal-card">
+        <p class="eyebrow">A moment, not an ending</p>
+        <h2>Take a<br /><em>moment.</em></h2>
+        <p>You have stumbled three times. Try this chapter again, or take a quieter route.</p>
+        <div class="recovery-choices">
+          <button id="restart-chapter-button" class="choice-button"><b>Restart chapter</b><span>Return to the first line. Memories and items stay with you.</span></button>
+          <button id="safe-route-button" class="choice-button is-primary"><b>Take the safe route</b><span>Resume at the last quiet marker, 0.88× speed, fewer obstacles.</span></button>
+        </div>
+        <div class="recovery-countdown">
+          <div class="countdown-track"><i id="recovery-bar"></i></div>
+          <span id="recovery-countdown">Safe route in 6 s</span>
+        </div>
+        <p class="recovery-note">No failure. The avenue keeps going.</p>
+      </div>
+    </section>
+
+    <section id="finish-screen" class="screen compact-screen finish-screen" hidden>
+      <div class="modal-card">
+        <p class="eyebrow">Chapter 01 complete</p>
+        <h2>The road keeps<br /><em>going</em></h2>
+        <p>The avenue ends at the sunlit gate. No score, no ranking — only what you noticed on the way.</p>
+        <div class="result-grid">
+          <div><span>Time</span><strong id="result-time">00:00.0</strong></div>
+          <div><span>Stumbles</span><strong id="result-stumbles">0</strong></div>
+          <div><span>Memories</span><strong id="result-memories">0 / 1</strong></div>
+        </div>
+        <p id="result-route" class="result-route">Route: Standard Lane</p>
+        <p id="result-note" class="result-note"></p>
+        <button id="next-chapter-button" class="primary-button"><span>Continue to Chapter 02</span><b>→</b></button>
+        <div class="finish-secondary-actions">
+          <button id="restart-button" class="text-button"><span>Run the avenue again</span></button>
+          <button class="text-button" data-journey-hub type="button">Journey directory</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="journey-transition" class="journey-transition" aria-live="polite" hidden>
+      <span class="eyebrow">Next Stop: The Open Wild</span>
+      <strong id="transition-label">The journey continues</strong>
+      <i aria-hidden="true"></i>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
